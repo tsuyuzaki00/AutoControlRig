@@ -1,15 +1,23 @@
 import pymel.core as pm
 
-IKjnt = pm.selected()[0]
-FKjnt = pm.selected()[1]
-blendc = pm.selected()[2]
-jnt = pm.selected()[3]
+jnt = pm.ls(sl=True, dag=True)
+pm.duplicate(n='FK',rc=True)
+FKjnt = pm.ls(sl=True, dag=True)
+pm.duplicate(n='IK',rc=True)
+IKjnt = pm.ls(sl=True, dag=True)
 
 trsAttr = 'translate'
+rotateAttr = 'rotate'
 blendc_inAttr1 = 'color1'
 blendc_inAttr2 = 'color2'
 blendc_outAttr = 'output'
 
-pm.connectAttr( IKjnt.name()+'.'+trsAttr, blendc.name()+'.'+blendc_inAttr1,f=True )
-pm.connectAttr( FKjnt.name()+'.'+trsAttr, blendc.name()+'.'+blendc_inAttr2,f=True )
-pm.connectAttr( blendc.name()+'.'+blendc_outAttr, jnt.name()+'.'+trsAttr,f=True )
+for i in range(len(jnt)):
+    blendc = pm.createNode('blendColors', n='blendColor_{}'.format(i))
+    pm.connectAttr( IKjnt[i]+'.'+trsAttr, blendc+'.'+blendc_inAttr1)
+    pm.connectAttr( FKjnt[i]+'.'+trsAttr, blendc+'.'+blendc_inAttr2)
+    pm.connectAttr( blendc+'.'+blendc_outAttr, jnt[i]+'.'+trsAttr )
+    
+    #pm.connectAttr( IKjnt[i]+'.'+rotateAttr, blendc+'.'+blendc_inAttr1)
+    #pm.connectAttr( FKjnt[i]+'.'+rotateAttr, blendc+'.'+blendc_inAttr2)
+    #pm.connectAttr( blendc+'.'+blendc_outAttr, jnt[i]+'.'+rotateAttr)
