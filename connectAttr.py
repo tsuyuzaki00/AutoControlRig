@@ -1,12 +1,11 @@
-import maya.cmds as cmds
 import pymel.core as pm
 
-trsList = cmds.ls(v=True,tr=True)
-print trsList
+pm.select('jnt_set')
+jnts = pm.ls(sl=True, dag=True)
 
-ctl = pm.selected()[0]
-obj = pm.selected()[1]
+pm.select('jntPrx_set')
+jntPrxs = pm.ls(sl=True, dag=True)
 
-outAttr = 'translate'
-inAttr = 'color1'
-pm.connectAttr( ctl.name()+'.'+outAttr, obj.name()+'.'+inAttr,f=True )
+for i in range(4):
+    pm.connectAttr( jnts[i]+'.'+'translate', jntPrxs[i]+'.'+'translate',f=True )
+    pm.connectAttr( jnts[i]+'.'+'rotate', jntPrxs[i]+'.'+'rotate',f=True )
