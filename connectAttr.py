@@ -1,9 +1,11 @@
 import pymel.core as pm
 
-pm.select('jnt_set')
+name = 'root'
+
+pm.select(name + '_jnt')
 jnts = pm.ls(sl=True, dag=True)
 
-pm.select('jntPrx_set')
+pm.select(name + '_jntPrx')
 jntPrxs = pm.ls(sl=True, dag=True)
 
 for i in range(len(jnts)):
