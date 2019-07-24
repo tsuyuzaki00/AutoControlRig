@@ -1,11 +1,12 @@
 import pymel.core as pm
 
-name = 'root'
+name = 'dangoro'
+parts = 'root'
 
-pm.select(name + '_jnt')
+pm.select(name + parts + '_jnt')
 jnts = pm.ls(sl=True, dag=True)
 
-pm.select(name + '_jntPrx')
+pm.select(name + parts + '_jntPrx')
 jntPrxs = pm.ls(sl=True, dag=True)
 jntPrx =[i for i in jntPrxs if '_jntPrx' in i.name()]
 
