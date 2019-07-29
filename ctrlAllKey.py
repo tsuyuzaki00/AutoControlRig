@@ -1,6 +1,7 @@
 import pymel.core as pm
 
 def main():
+    pm.select(ado = True)
     selects = pm.ls(sl=True, dag=True)
 
     for allKey in selects:
