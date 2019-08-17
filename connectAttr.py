@@ -1,15 +1,12 @@
 import pymel.core as pm
 
-name = 'dangoro'
-parts = 'root'
+def main():
+    name = 'dangoro'
 
-pm.select(name + parts + '_jnt')
-jnts = pm.ls(sl=True, dag=True)
+    pm.select(name + '_COG_jnt_C')
+    jnts = pm.ls(sl=True, dag=True)
+    jntPrxs = [jntPrx.replace("_jnt",'_jntPrx') for jntPrx in jnts]
 
-pm.select(name + parts + '_jntPrx')
-jntPrxs = pm.ls(sl=True, dag=True)
-jntPrx =[i for i in jntPrxs if '_jntPrx' in i.name()]
-
-for i in range(len(jnts)):
-    pm.connectAttr( jntPrx[i]+'.'+'translate', jnts[i]+'.'+'translate',f=True )
-    pm.connectAttr( jntPrx[i]+'.'+'rotate', jnts[i]+'.'+'rotate',f=True )
+    for i in range(len(jnts)):
+        pm.connectAttr( jntPrxs[i]+'.'+'translate', jnts[i]+'.'+'translate',f=True )
+        pm.connectAttr( jntPrxs[i]+'.'+'rotate', jnts[i]+'.'+'rotate',f=True )
