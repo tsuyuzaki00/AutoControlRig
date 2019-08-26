@@ -1,15 +1,13 @@
 import pymel.core as pm
 
-parts = 'upArm'
-jntType = '_jntFK'
-LR = '_R'
+def main():
+    select1 = pm.selected() [0]
+    select2 = pm.selected() [1]
 
-pm.select(upArm + jntType + LR)
-Prx = pm.ls(sl=True, dag=True)
+    ctrl = select1.split("_")
+    jnt = select2.split("_")
 
-jntPrxs =[i for i in Prx if i.endswith(LR)]
-names = [jntPrx.replace('_jntFK' + LR, '') for jntPrx in jntPrxs]
+    name = ctrl[0] + '_' + ctrl[1]
 
-for name in names:
-    pm.pointConstraint( name + '_ctrlFK' + LR, name + jntType + LR, n = name + '_pointConstraint')
-    pm.orientConstraint( name + '_ctrlFK' + LR, name + jntType + LR, n = name + '_orientConstraint')
+    pm.pointConstraint( select1 , select2 , n = name + '_pointConstraint_' + ctrl[-1])
+    pm.orientConstraint( select1 , select2 ,  n = name + '_orientConstraint_' + ctrl[-1])
