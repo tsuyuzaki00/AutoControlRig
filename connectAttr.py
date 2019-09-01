@@ -1,9 +1,7 @@
 import pymel.core as pm
 
 def main():
-    name = 'dangoro'
-
-    pm.select(name + '_COG_jnt_C')
+    pm.selected()
     jnts = pm.ls(sl=True, dag=True)
     jntPrxs = [jntPrx.replace("_jnt",'_jntPrx') for jntPrx in jnts]
 

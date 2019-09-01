@@ -1,15 +1,13 @@
 import pymel.core as pm
 
 def main():
-    name = 'dangoro_leg'
-    LR = '_R'
     trsAttr = 'translate'
     rotateAttr = 'rotate'
     blendc_inAttr1 = 'color1'
     blendc_inAttr2 = 'color2'
     blendc_outAttr = 'output'
 
-    pm.select(name + '_jntPrx' + LR)
+    pm.selected()
     Prx = pm.ls(sl=True, dag=True)
 
     jntPrxs =[i for i in Prx if '_jntPrx' in i.name()]
