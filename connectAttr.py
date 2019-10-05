@@ -8,3 +8,4 @@ def main():
     for i in range(len(jnts)):
         pm.connectAttr( jntPrxs[i]+'.'+'translate', jnts[i]+'.'+'translate',f=True )
         pm.connectAttr( jntPrxs[i]+'.'+'rotate', jnts[i]+'.'+'rotate',f=True )
+        pm.connectAttr( jntPrxs[i]+'.'+'scale', jnts[i]+'.'+'scale',f=True )
