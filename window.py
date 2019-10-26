@@ -12,7 +12,7 @@ with pm.window( title='my tools', width=300 ):
         pm.separator()
         
         pm.text(label='float field' )
-        iField = pm.floatFieldGrp( numberOfFields=1, label='some value' )
+        fField = pm.floatFieldGrp( numberOfFields=1, label='some value' )
         pm.separator()
         
         pm.text(label='slider' )
@@ -23,11 +23,11 @@ with pm.window( title='my tools', width=300 ):
         txt = pm.textFieldGrp(label='text field', pht='please input text...', text='hogehoge' )
         pm.separator()
         
-        cmdString = 'print '
-        cmdString = 'rdoGrp.getSelect(),'
-        cmdString = 'boxGrp.getValueArray4(),'
-        cmdString = 'fField.getValue()[0],'
-        cmdString = 'sld.getValue(),'
-        cmdString = 'txt.getText(),'
-        pm.button( label='print' , c=cmdString )
-        print txt
+        pm.button( label='print' , c='prints()' )
+
+def prints():
+    print rdoGrp.getSelect()
+    print boxGrp.getValueArray4()
+    print fField.getValue()
+    print sld.getValue()
+    print txt.getText()
