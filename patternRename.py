@@ -1,11 +1,26 @@
 import pymel.core as pm
 
-def main():
+def constraintRename():
+    to = 'trs'
     sels = pm.selected()[0:]
     for sel in sels:
         selb = sel[:-1]
         part = selb.split("_")
-        name = part[0] + '_' + part[1] + '_' + part[-1] + '_' + part[-2]
+        trsoff = to + part[-1].capitalize()
+        name = trsoff + '_' + part[1] + '_' + part[2] + '_' + part[3]
         pm.rename ( sel, name )
-    
-main()
+
+def changeRename():
+    sels = pm.selected()[0:]
+    for sel in sels:
+        part = sel.split("_")
+        num = len(part)
+        if num == 3:
+            name = part[2] + '_' + part[1] + '_' + part[0]
+            pm.rename ( sel, name )
+        elif num == 4:
+            name = part[2] + '_' + part[1] + '_' + part[0] + '_' + part[3]
+            pm.rename ( sel, name )
+
+constraintRename()
+changeRename()

@@ -2,10 +2,10 @@ import pymel.core as pm
 
 def main():
     pm.selected()
-    jnts = pm.ls(sl=True, dag=True)
-    jntPrxs = [jntPrx.replace("_jnt",'_jntPrx') for jntPrx in jnts]
+    bnds = pm.ls(sl=True, dag=True)
 
-    for i in range(len(jnts)):
-        pm.connectAttr( jntPrxs[i]+'.'+'translate', jnts[i]+'.'+'translate',f=True )
-        pm.connectAttr( jntPrxs[i]+'.'+'rotate', jnts[i]+'.'+'rotate',f=True )
-        pm.connectAttr( jntPrxs[i]+'.'+'scale', jnts[i]+'.'+'scale',f=True )
+    for bnd in bnds:
+        jnt = bnd.replace("bnd_",'jnt_')
+        pm.connectAttr( jnt +'.'+ 'translate', bnd +'.'+'translate',f=True )
+        pm.connectAttr( jnt +'.'+ 'rotate', bnd +'.'+'rotate',f=True )
+        pm.connectAttr( jnt +'.'+ 'scale', bnd +'.'+'scale',f=True )

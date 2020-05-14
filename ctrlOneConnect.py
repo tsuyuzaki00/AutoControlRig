@@ -4,9 +4,9 @@ def main():
     sel = pm.selected()
     parentSel = pm.listRelatives(sel, parent=True)
     if sel != []:
-        spaceName = sel[0].replace("_jnt",'_space')
-        ctrlName = sel[0].replace("_jnt",'_ctrl')
-        trsName = sel[0].replace("_jnt",'_trs')
+        spaceName = sel[0].replace("jnt_",'space_')
+        ctrlName = sel[0].replace("jnt_",'ctrl_')
+        trsName = sel[0].replace("jnt_",'trs_')
         
         spaceNode = pm.createNode( 'transform', n=spaceName)
         trsNode = pm.createNode( 'transform', n=trsName)
@@ -29,24 +29,25 @@ def main():
         name_ctrl_grp = (sel[0].split('_'))
         all = pm.ls()
         
-        if name_ctrl_grp[0]+'_ctrl_grp' not in all:
-            pm.createNode( 'transform', n=name_ctrl_grp[0]+'_ctrl_grp')
+        if 'grp_ctrl_'+name_ctrl_grp[2] not in all:
+            pm.createNode( 'transform', n='grp_ctrl_'+ name_ctrl_grp[2])
 
         if parentSel == []:
-            pm.parent(spaceNode, name_ctrl_grp[0]+'_ctrl_grp')
+            pm.parent(spaceNode, 'grp_ctrl_'+ name_ctrl_grp[2])
             pm.pointConstraint(trsNode,sel[0])
             pm.orientConstraint(trsNode,sel[0])
         else :
-            offsetName = sel[0].replace("_jnt",'_offset')
+            offsetName = sel[0].replace("jnt_",'offset_')
             offsetNode = pm.createNode( 'transform', n=offsetName)
             pm.parent(offsetNode,parentSel[0])
             pm.setAttr(offsetNode+'.translate', 0, 0, 0, type="double3")
             pm.setAttr(offsetNode+'.rotate', 0, 0, 0, type="double3")
             
-            pm.parent(offsetNode, name_ctrl_grp[0]+'_ctrl_grp')
+            pm.parent(offsetNode, 'grp_ctrl_'+ name_ctrl_grp[2])
             pm.parent(spaceNode,offsetNode)
             
             pm.pointConstraint(parentSel[0],offsetNode)
             pm.orientConstraint(parentSel[0],offsetNode)
             pm.pointConstraint(trsNode,sel[0])
             pm.orientConstraint(trsNode,sel[0])
+            
