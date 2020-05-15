@@ -6,7 +6,7 @@ def constraintRename():
     for sel in sels:
         selb = sel[:-1]
         part = selb.split("_")
-        trsoff = to + part[-1].capitalize()
+        trsoff = to + part[-1][0].upper() + part[-1][1:]
         name = trsoff + '_' + part[1] + '_' + part[2] + '_' + part[3]
         pm.rename ( sel, name )
 
