@@ -6,11 +6,15 @@ def main():
     cmds.menuItem( label='Green' )
     cmds.menuItem( label='Yellow' )
     cmds.setParent( '..', menu=True )
+
     cmds.menuItem( label='createCtrl',
-    c = 'from scripts.AutoControlRig import ctrlOneConnect;ctrlOneConnect.main()'
-    )
+    c = 'from scripts.AutoControlRig import ctrlOneConnect; ctrlOneConnect.main()')
     cmds.menuItem( optionBox=True )
+
     cmds.menuItem( label='allCtrlKey',
-    c = 'from scripts.AutoControlRig import grpCtrlAllKey;grpCtrlAllKey.main()'
-    )
+    c = 'from scripts.AutoControlRig import grpCtrlAllKey; grpCtrlAllKey.main()')
+    cmds.menuItem( optionBox=True )
+
+    cmds.menuItem( label='layerSetting',
+    c = 'from scripts.AutoControlRig import layerSetting; layerSetting.main()')
     cmds.menuItem( optionBox=True )
