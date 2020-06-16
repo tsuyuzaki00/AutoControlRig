@@ -5,6 +5,7 @@ def main():
     cmds.menuItem( subMenu=True, label='Setting' )
 
     cmds.menuItem( label='LeyerSetting', c = 'from mainEdit import layerSetting as ps; ps.main()')
+    cmds.menuItem( optionBox=True )
     cmds.menuItem( label='autoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
     cmds.menuItem( optionBox=True )
 
@@ -75,6 +76,7 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='SelectsEdit', to = True )
+    cmds.menuItem( label='ConerEdge', c = 'from mainEdit import cornerEdgeSelect as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='MirrorEdit', to = True )
