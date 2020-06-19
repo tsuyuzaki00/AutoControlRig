@@ -1,55 +1,60 @@
 import pymel.core as pm
 
-def colorChage(center,left,right):
+class Window():
+    def __init__(self):
+        with pm.window( title = 'colorChenge', ret = True):
+            with pm.columnLayout( adjustableColumn = True ):
+                pm.text( label = 'select Color' )
+                self.centerRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 4,
+                                                    label = 'Center',
+                                                    labelArray4 = [ 'Base Yellow','Base Green','Second Green','AutoSupport Green'])
+                pm.separator()
+                self.leftRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 3,
+                                                    label = 'Left',
+                                                    labelArray3 = [ 'Base Blue','Second Cyan','AutoSupport Purple'])
+                pm.separator()
+                self.rightRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 3,
+                                                    label = 'Right',
+                                                    labelArray3 = [ 'Base Red','Second Pink','AutoSupport Magenta'])
+                pm.separator()
+                pm.button( label = 'colorChange', c = "colorChage(centerRdoGrp.getSelect(),leftRdoGrp.getSelect(),rightRdoGrp.getSelect())")
+
+    def colorChage(self,center,left,right):
     sel = pm.selected()
     shapes = pm.listRelatives(sel[0:], type='nurbsCurve')
     
     for shape in shapes:
         pm.setAttr(shape+'.overrideEnabled',1)
-        print center
-            #^‚ñ’†
+            #çœŸã‚“ä¸­
         if shape.endswith('_CShape') or shape.endswith('_CTShape'):
             if center == 1:
-                pm.setAttr(shape+'.overrideColor',17) #ƒx[ƒXƒJƒ‰[A‰©F
+                pm.setAttr(shape+'.overrideColor',17) #ãƒ™ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã€é»„è‰²
             elif center == 2:
-                pm.setAttr(shape+'.overrideColor',14) #ƒx[ƒXƒJƒ‰[AƒOƒŠ[ƒ“
+                pm.setAttr(shape+'.overrideColor',14) #ãƒ™ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã€ã‚°ãƒªãƒ¼ãƒ³
             elif center == 3:
-                pm.setAttr(shape+'.overrideColor',27) #ƒZƒJƒ“ƒhƒJƒ‰[A‚ ‚Á‚³‚è—Î
+                pm.setAttr(shape+'.overrideColor',27) #ã‚»ã‚«ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼ã€ã‚ã£ã•ã‚Šç·‘
             elif center == 4:
-                pm.setAttr(shape+'.overrideColor',7 ) #ƒI[ƒgƒTƒ|[ƒgƒJƒ‰[A”Z‚¢—Î
+                pm.setAttr(shape+'.overrideColor',7 ) #ã‚ªãƒ¼ãƒˆã‚µãƒãƒ¼ãƒˆã‚«ãƒ©ãƒ¼ã€æ¿ƒã„ç·‘
             
-            #¶
+            #å·¦
         if shape.endswith('_LShape') or shape.endswith('_LTShape'):
             if left == 1:
-                pm.setAttr(shape+'.overrideColor',6 ) #ƒx[ƒXƒJƒ‰[Aƒuƒ‹[
+                pm.setAttr(shape+'.overrideColor',6 ) #ãƒ™ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã€ãƒ–ãƒ«ãƒ¼
             elif left == 2:
-                pm.setAttr(shape+'.overrideColor',18) #ƒZƒJƒ“ƒhƒJƒ‰[AƒVƒAƒ“
+                pm.setAttr(shape+'.overrideColor',18) #ã‚»ã‚«ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼ã€ã‚·ã‚¢ãƒ³
             elif left == 3:
-                pm.setAttr(shape+'.overrideColor',30) #ƒI[ƒgƒTƒ|[ƒgƒJƒ‰[A‡ 
+                pm.setAttr(shape+'.overrideColor',30) #ã‚ªãƒ¼ãƒˆã‚µãƒãƒ¼ãƒˆã‚«ãƒ©ãƒ¼ã€ç´«
             
-            #‰E
+            #å³
         if shape.endswith('_RShape') or shape.endswith('_RTShape'):
             if right == 1:
-                pm.setAttr(shape+'.overrideColor',13) #ƒx[ƒXƒJƒ‰[AƒŒƒbƒh
+                pm.setAttr(shape+'.overrideColor',13) #ãƒ™ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã€ãƒ¬ãƒƒãƒ‰
             elif right == 2:
-                pm.setAttr(shape+'.overrideColor',20) #ƒZƒJƒ“ƒhƒJƒ‰[Aƒsƒ“ƒN
+                pm.setAttr(shape+'.overrideColor',20) #ã‚»ã‚«ãƒ³ãƒ‰ã‚«ãƒ©ãƒ¼ã€ãƒ”ãƒ³ã‚¯
             elif right == 3:
-                pm.setAttr(shape+'.overrideColor',31) #ƒI[ƒgƒTƒ|[ƒgƒJƒ‰[Aƒ}ƒ[ƒ“ƒ_
+                pm.setAttr(shape+'.overrideColor',31) #ã‚ªãƒ¼ãƒˆã‚µãƒãƒ¼ãƒˆã‚«ãƒ©ãƒ¼ã€ãƒã‚¼ãƒ³ãƒ€
 
-with pm.window( title = 'colorChenge', ret = True):
-    with pm.columnLayout( adjustableColumn = True ):
-        pm.text( label = 'select Color' )
-        centerRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 4,
-                                            label = 'Center',
-                                            labelArray4 = [ 'Base Yellow','Base Green','Second Green','AutoSupport Green'])
-        pm.separator()
-        leftRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 3,
-                                            label = 'Left',
-                                            labelArray3 = [ 'Base Blue','Second Cyan','AutoSupport Purple'])
-        pm.separator()
-        rightRdoGrp = pm.radioButtonGrp( numberOfRadioButtons = 3,
-                                            label = 'Right',
-                                            labelArray3 = [ 'Base Red','Second Pink','AutoSupport Magenta'])
-        pm.separator()
-        pm.button( label = 'colorChange', c = "colorChage(centerRdoGrp.getSelect(),leftRdoGrp.getSelect(),rightRdoGrp.getSelect())")
+def main():
+    window = Window()
 
+main()
