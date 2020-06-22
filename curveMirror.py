@@ -1,6 +1,6 @@
 import pymel.core as pm
 
-def shapeMove():
+def main():
     sels = pm.selected()
     for sel in sels:
         CVs = pm.filterExpand(sel,sm = 28)
@@ -9,5 +9,3 @@ def shapeMove():
             renameCV = CV.replace('_L', '_R')
             pm.select(renameCV)
             pm.move(CVPos[0]*-1,CVPos[1],CVPos[2])
-            
-shapeMove()

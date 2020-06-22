@@ -1,5 +1,9 @@
 import pymel.core as pm
 
+def main():
+    addNullNode('')
+
+
 def addNullNode(node):
     node = ''
     sel = pm.selected()[0]
