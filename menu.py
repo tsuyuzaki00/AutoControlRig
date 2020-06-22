@@ -3,14 +3,13 @@ def main():
     cmds.menu(l = 'Custom Tools', p ='MayaWindow', to = True)
 
     cmds.menuItem( subMenu=True, label='Setting' )
-
     cmds.menuItem( label='LeyerSetting', c = 'from mainEdit import layerSetting as ps; ps.main()')
     cmds.menuItem( optionBox=True )
     cmds.menuItem( label='autoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
     cmds.menuItem( optionBox=True )
-
     cmds.setParent( '..', menu=True )
 
+    cmds.menuItem( divider = True, dividerLabel = 'Modeling')
     cmds.menuItem( subMenu=True, label='CreateObjects', to = True)
     cmds.menuItem( label='Cube', i = 'polyCube.png', c = 'from createRenames import polyCubeCreateRename as ps; ps.main()')
     cmds.menuItem( label='Ball',  i = 'polySphere.png', c = 'from createRenames import polyBallCreateRename as ps; ps.main()')
@@ -35,6 +34,10 @@ def main():
     cmds.menuItem( label='SoftEdge', i = 'polySoftEdge.png', c = 'from modelEdit import softEdge as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
 
+    cmds.menuItem( divider = True, dividerLabel = 'Rigging')
+    cmds.menuItem( subMenu=True, label='Skin', to = True)
+    cmds.setParent( '..', menu=True )
+    
     cmds.menuItem( subMenu=True, label='CreateCurves', to = True)
     cmds.menuItem( label='Antenna', c = 'from mayaPyCurves import curveAntenna as ps; ps.main()' )
     cmds.menuItem( label='Arrow1', c = 'from mayaPyCurves import curveArrow1 as ps; ps.main()' )
@@ -48,9 +51,6 @@ def main():
     cmds.menuItem( label='VectorIK', c = 'from mayaPyCurves import curveVectorIK as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
 
-    cmds.menuItem( subMenu=True, label='Skin', to = True)
-    cmds.setParent( '..', menu=True )
-
     cmds.menuItem( subMenu=True, label='Constraint', to = True )
     cmds.menuItem( label='Parent', i = 'parentConstraint.png', c = 'from constraints import parentConstraintRename as ps; ps.main()')
     cmds.menuItem( label='Point', i = 'posConstraint.png', c = 'from constraints import pointConstraintRename as ps; ps.main()')
@@ -62,25 +62,22 @@ def main():
     cmds.menuItem( label='ParentMatrix', c = 'from constraints import matrixParentConnect as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
-    cmds.menuItem( subMenu=True, label='CreateCtrl', to = True )
-    cmds.menuItem( label='addNullNode', c = 'from mainEdit import addNullNode as ps; ps.main()')
-    cmds.menuItem( label='OffsetCtrl', c = 'from mainEdit import ctrlOneConnect as ps; ps.main()')
-    cmds.menuItem( optionBox=True )
-
-    cmds.setParent( '..', menu=True )
-
-    cmds.menuItem( subMenu=True, label='Animation', to = True)
-
-    cmds.menuItem( label='AllCtrlKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
-    cmds.menuItem( optionBox=True )
-
+    cmds.menuItem( subMenu=True, label='MirrorEdit', to = True )
+    cmds.menuItem( label='CurveEditMirror', c = 'from mainEdit import curveMirror as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='SelectsEdit', to = True )
-    cmds.menuItem( label='curveInSelects', c = 'from mainEdit import curveInSelect as ps; ps.main()')
+    cmds.menuItem( label='CurveInSelects', c = 'from mainEdit import curveInSelect as ps; ps.main()')
+    cmds.menuItem( label='OffsetCtrl', c = 'from mainEdit import ctrlOneConnect as ps; ps.main()')
+    cmds.menuItem( optionBox=True )
+    cmds.setParent( '..', menu=True )
+    
+    cmds.menuItem( divider = True, dividerLabel = 'Animator')
+    cmds.menuItem( subMenu=True, label='CreateCtrl', to = True )
+    cmds.menuItem( label='AddNullNode', c = 'from mainEdit import addNullNode as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
-    cmds.menuItem( subMenu=True, label='MirrorEdit', to = True )
-    cmds.menuItem( label='curveEditMirror', c = 'from mainEdit import curveMirror as ps; ps.main()')
+    cmds.menuItem( subMenu=True, label='Keyframe', to = True)
+    cmds.menuItem( label='GrpCtrlAllKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
+    cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
-
