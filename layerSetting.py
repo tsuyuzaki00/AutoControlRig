@@ -25,7 +25,7 @@ class Settings(object):
 
 	def save(self):
 		saveData = { 
-                    'guide':self.guide,
+                    'guide':self.guide
 			        }
 		if not os.path.exists(self.__filename):
 			os.makedirs(os.path.dirname(self.__filename))
@@ -41,9 +41,6 @@ class OptionWidget(QtWidgets.QWidget):
 
         self.__guide = QtWidgets.QCheckBox('guide',self)
         mainLayout.addRow('', self.__guide)
-        
-    def initialize(self):
-        self.__guide.setChecked(settings.guide)
 			
     def apply(self):
         main()
@@ -51,7 +48,7 @@ class OptionWidget(QtWidgets.QWidget):
 class MainWindow(QtWidgets.QMainWindow):
 	def __init__(self, *args, **kwargs):
 		super(MainWindow, self).__init__(*args, **kwargs)
-		self.setWindowTitle('Test window')
+		self.setWindowTitle('layerSetting')
 		self.resize(400, 200)
 		
 		toolWidget = qt.ToolWidget(self)
@@ -92,16 +89,7 @@ def layerSetting(guide = True):
                 if i == 'guide_' + name + '_layer':
                     guideLayer = 'guide_' + name + '_layer'
                     pm.editDisplayLayerMembers(guideLayer, guideGrp)
-         
-            litGrp = pm.createNode('transform', n = '_'.join( ['grp','lit',name] ))
-            pm.parent(litGrp, allGrp)
-            if layers == []:
-                litLayer = pm.createDisplayLayer(n = '_'.join( ['lit',name,'layer'] ))
-                pm.editDisplayLayerMembers(litLayer, litGrp)
-            for i in layers:
-                if i == 'lit_' + name + '_layer':
-                    litLayer = 'lit_' + name + '_layer'
-                    pm.editDisplayLayerMembers(litLayer, litGrp)
+
 
 def option():
     window = MainWindow(qt.getMayaWindow())
