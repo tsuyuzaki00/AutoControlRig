@@ -1,5 +1,4 @@
 import os, json
-from maya import cmds, OpenMaya
 from PySide2 import QtWidgets, QtGui
 from myTool.lib import qt
 
