@@ -21,7 +21,7 @@ class Settings(object):
 				self.guide = saveData['guide']
 		
 	def reset(self):
-		self.guide = True
+		self.guide = False
 
 	def save(self):
 		saveData = { 
@@ -41,26 +41,27 @@ class OptionWidget(QtWidgets.QWidget):
 
         self.__guide = QtWidgets.QCheckBox('guide',self)
         mainLayout.addRow('', self.__guide)
-			
+
     def apply(self):
         main()
 
 class MainWindow(QtWidgets.QMainWindow):
-	def __init__(self, *args, **kwargs):
-		super(MainWindow, self).__init__(*args, **kwargs)
-		self.setWindowTitle('layerSetting')
-		self.resize(400, 200)
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
+        self.setWindowTitle('layerSetting')
+        self.resize(400, 200)
 
-		toolWidget = qt.ToolWidget(self)
+        toolWidget = qt.ToolWidget(self)
         self.setCentralWidget(toolWidget)
+
         optionWidget = OptionWidget(self)
         toolWidget.setOptionWidget(optionWidget)
 
-        #toolWidget.setActionName("hogehoge")
-		toolWidget.applied.connect(qt.Callback(optionWidget.apply))
-		toolWidget.closed.connect(self.close)
+        toolWidget.setActionName(self.windowTitle())
+        toolWidget.applied.connect(qt.Callback(optionWidget.apply))
+        toolWidget.closed.connect(self.close)
 		
-def layerSetting(guide = True):
+def layerSetting(guide):
     sceneName = pm.sceneName().basename()
     part = sceneName.split("_")
     
@@ -78,6 +79,7 @@ def layerSetting(guide = True):
     layers = pm.selected(type='displayLayer')
     pm.select(cl = True)
 
+    print guide
 
     if guide == True:
         allGrp = pm.createNode('transform', n = name)
