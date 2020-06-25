@@ -26,12 +26,12 @@ class Settings(object):
                 #self.light = saveData['light']
     
     def reset(self):
-        self.guide = True
+        self.guide = False
         self.geometry = True
-        self.joint = True
-        self.ctrl = True
-        self.camera = True
-        self.light = True
+        self.joint = False
+        self.ctrl = False
+        self.camera = False
+        self.light = False
         
     def save(self):
         saveData = { #'guide':self.guide,
@@ -126,89 +126,104 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
     sceneName = pm.sceneName().basename()
     part = sceneName.split("_")
     
-    if pm.objExists(part[0]) or pm.objExists('scene'):
-        pm.error('Group name already exists')
-    
     if part[0].endswith('.ma') or part[0].endswith('.mb'):
         name = part[0][:-3]
     elif part[0] == '':
         name = 'scene'
     else:
         name = part[0]
-
-    pm.select(all = True)
-    layers = pm.selected(type='displayLayer')
-    pm.select(cl = True)
-
+    
     if guide == True or geometry == True or joint == True or ctrl == True or camera == True or light == True:
-        allGrp = pm.createNode('transform', n = name)
+        if pm.objExists(name) == False:
+            allGrp = pm.createNode('transform', n = name)
+        else :
+            allGrp = name
 
         if guide:
-            guideGrp = pm.createNode('transform', n = '_'.join( ['grp','gud',name] ))
+            if pm.objExists( '_'.join(['grp','gud',name]) ):
+                return
+            guideGrp = pm.createNode( 'transform', n = '_'.join(['grp','gud',name]) )
             pm.parent(guideGrp, allGrp)
-            if layers == []:
+
+            if pm.objExists( '_'.join(['gud',name,'layer']) ):
+                guideLayer = '_'.join( ['gud',name,'layer'] )
+                pm.editDisplayLayerMembers(guideLayer, guideGrp)
+            else :
                 guideLayer = pm.createDisplayLayer(n = '_'.join( ['gud',name,'layer'] ))
                 pm.editDisplayLayerMembers(guideLayer, guideGrp)
-            for i in layers:
-                if i == 'gud_' + name + '_layer':
-                    guideLayer = 'gud_' + name + '_layer'
-                    pm.editDisplayLayerMembers(guideLayer, guideGrp)
         
         if geometry:
-            geometryGrp = pm.createNode('transform', n = '_'.join( ['grp','geo',name] ))
-            pm.parent(geometryGrp, allGrp)
-            if layers == []:
+            if pm.objExists( '_'.join(['grp','geo',name]) ):
+                return
+            geoGrp = pm.createNode( 'transform', n = '_'.join(['grp','geo',name]) )
+            pm.setAttr('grp_geo_' + name + '.inheritsTransform', 0)
+            pm.parent(geoGrp, allGrp)
+
+            pm.select(all = True)
+            getMesh = pm.listRelatives(type='mesh')
+            getGeo = pm.listRelatives(getMesh, p = True)
+            pm.select(cl = True)
+            for i in getGeo:
+                pm.parent(i, geoGrp)
+
+            if pm.objExists( '_'.join(['geo',name,'layer']) ):
+                geometryLayer = '_'.join( ['geo',name,'layer'] )
+                pm.editDisplayLayerMembers(geometryLayer, geoGrp)
+            else :
                 geometryLayer = pm.createDisplayLayer(n = '_'.join(['geo',name,'layer'] ))
-                pm.editDisplayLayerMembers(geometryLayer, geometryGrp)
-            for i in layers:
-                if i == 'geo_' + name + '_layer':
-                    geometryLayer = 'geo_' + name + '_layer'
-                    pm.editDisplayLayerMembers(geometryLayer, geometryGrp)
+                pm.editDisplayLayerMembers(geometryLayer, geoGrp)
 
         if joint:
-            jointGrp = pm.createNode('transform', n = '_'.join( ['grp','jnt',name] ))
+            if pm.objExists( '_'.join(['grp','jnt',name]) ):
+                return
+            jointGrp = pm.createNode( 'transform', n = '_'.join( ['grp','jnt',name]) )
             pm.parent(jointGrp, allGrp)
-            if layers == []:
-                jointLayer = pm.createDisplayLayer(n = '_'.join(['jnt',name,'layer'] ))
+
+            if pm.objExists( '_'.join(['jnt',name,'layer']) ):
+                jointLayer = '_'.join( ['jnt',name,'layer'] )
                 pm.editDisplayLayerMembers(jointLayer, jointGrp)
-            for i in layers:
-                if i == 'jnt_' + name + '_layer':
-                    jointLayer = 'jnt_' + name + '_layer'
-                    pm.editDisplayLayerMembers(jointLayer, jointGrp)
+            else :
+                jointLayer = pm.createDisplayLayer(n = '_'.join(['jnt',name,'layer']) )
+                pm.editDisplayLayerMembers( jointLayer, jointGrp )
 
         if ctrl:
-            ctrlGrp = pm.createNode('transform', n = '_'.join( ['grp','ctrl',name] ))
+            if pm.objExists( '_'.join(['grp','ctrl',name]) ):
+                return
+            ctrlGrp = pm.createNode( 'transform', n = '_'.join( ['grp','ctrl',name]) )
             pm.parent(ctrlGrp, allGrp)
-            if layers == []:
-                ctrlLayer = pm.createDisplayLayer(n = '_'.join(['ctrl',name,'layer'] ))
-                pm.editDisplayLayerMembers(ctrlLayer, ctrlGrp)
-            for i in layers:
-                if i == 'ctrl_' + name + '_layer':
-                    ctrlLayer = 'ctrl_' + name + '_layer'
-                    pm.editDisplayLayerMembers(ctrlLayer, ctrlGrp)
+
+            if pm.objExists( '_'.join(['ctrl',name,'layer']) ):
+                ctrlLayer = '_'.join( ['ctrl',name,'layer'] )
+                pm.editDisplayLayerMembers(ctrlLayer, jointGrp)
+            else :
+                ctrlLayer = pm.createDisplayLayer( n = '_'.join(['ctrl',name,'layer']) )
+                pm.editDisplayLayerMembers( ctrlLayer, ctrlGrp )
 
         if camera:
-            cameraGrp = pm.createNode('transform', n = '_'.join( ['grp','cam',name] ))
-            pm.parent(cameraGrp, allGrp)
-            if layers == []:
-                cameraLayer = pm.createDisplayLayer(n = '_'.join(['cam',name,'layer'] ))
+            if pm.objExists( '_'.join(['grp','cam',name]) ):
+                return
+            cameraGrp = pm.createNode( 'transform', n = '_'.join( ['grp','cam',name]) )
+            pm.parent( cameraGrp, allGrp )
+
+            if pm.objExists( '_'.join(['cam',name,'layer']) ):
+                cameraLayer = '_'.join( ['cam',name,'layer'] )
                 pm.editDisplayLayerMembers(cameraLayer, cameraGrp)
-            for i in layers:
-                if i == 'cam_' + name + '_layer':
-                    cameraLayer = 'cam_' + name + '_layer'
-                    pm.editDisplayLayerMembers(cameraLayer, cameraGrp)
+            else :
+                cameraLayer = pm.createDisplayLayer( n = '_'.join(['cam',name,'layer']) )
+                pm.editDisplayLayerMembers( cameraLayer, cameraGrp )
 
         if light:
-            lightGrp = pm.createNode('transform', n = '_'.join( ['grp','lit',name] ))
-            pm.parent(lightGrp, allGrp)
-            if layers == []:
-                lightLayer = pm.createDisplayLayer(n = '_'.join(['lit',name,'layer'] ))
-                pm.editDisplayLayerMembers(lightLayer, lightGrp)
-            for i in layers:
-                if i == 'lit_' + name + '_layer':
-                    lightLayer = 'lit_' + name + '_layer'
-                    pm.editDisplayLayerMembers(lightLayer, lightGrp)
+            if pm.objExists( '_'.join(['grp','lit',name]) ):
+                return
+            lightGrp = pm.createNode( 'transform', n = '_'.join( ['grp','lit',name]) )
+            pm.parent( lightGrp, allGrp )
 
+            if pm.objExists( '_'.join(['lit',name,'layer']) ):
+                lightLayer = '_'.join(['lit',name,'layer'] )
+                pm.editDisplayLayerMembers( lightLayer, lightGrp )
+            else :
+                lightLayer = pm.createDisplayLayer(n = '_'.join(['lit',name,'layer'] ))
+                pm.editDisplayLayerMembers( lightLayer, lightGrp )
 
 def option():
     window = MainWindow(qt.getMayaWindow())
