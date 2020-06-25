@@ -47,7 +47,8 @@ class ToolWidget(QtWidgets.QWidget):
 		self.closed.emit()
 	
 	def setActionName(self, name):
-		self.__actionBtn.setText(name)
+		#self.__actionBtn.setText(name)
+        print name
 	
 	def setOptionWidget(self, widget):
 		self.__scrollWidget.setWidget(widget)
@@ -74,4 +75,6 @@ def getMayaWindow():
 	widget = shiboken2.wrapInstance(long(ptr), QtWidgets.QWidget)
 	return widget
 	
-	
+def option():
+    
+    

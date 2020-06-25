@@ -1,6 +1,6 @@
 import os, json
 from PySide2 import QtWidgets, QtGui
-from myTool.lib import qt
+from mainEdit import qtTest as qt
 import pymel.core as pm
 
 class Settings(object):
@@ -50,12 +50,15 @@ class MainWindow(QtWidgets.QMainWindow):
 		super(MainWindow, self).__init__(*args, **kwargs)
 		self.setWindowTitle('layerSetting')
 		self.resize(400, 200)
-		
+
 		toolWidget = qt.ToolWidget(self)
-		self.setCentralWidget(toolWidget)
-		
-		optionWidget = OptionWidget(self)
-		toolWidget.setOptionWidget(optionWidget)
+        self.setCentralWidget(toolWidget)
+        optionWidget = OptionWidget(self)
+        toolWidget.setOptionWidget(optionWidget)
+
+        #toolWidget.setActionName("hogehoge")
+		toolWidget.applied.connect(qt.Callback(optionWidget.apply))
+		toolWidget.closed.connect(self.close)
 		
 def layerSetting(guide = True):
     sceneName = pm.sceneName().basename()
@@ -97,5 +100,3 @@ def option():
     
 def main():
 	layerSetting(settings.guide)
-
-option()
