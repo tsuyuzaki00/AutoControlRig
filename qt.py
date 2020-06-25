@@ -33,9 +33,6 @@ class ToolWidget(QtWidgets.QWidget):
 		closeBtn.clicked.connect(self.close)
 		mainLayout.addWidget(closeBtn, 1, 2)
 
-	def hoge(self):
-		print "test"
-
 	def action(self):
 		self.apply()
 		self.close()
