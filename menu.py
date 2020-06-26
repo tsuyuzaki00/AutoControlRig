@@ -36,6 +36,7 @@ def main():
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')
     cmds.menuItem( subMenu=True, label='Skin', to = True)
+    cmds.menuItem( label='skinPaintValue', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='CreateCurves', to = True)

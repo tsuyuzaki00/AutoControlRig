@@ -29,7 +29,7 @@ class SkinValueWindow(QtWidgets.QWidget):
         self.__across.addButton(value4, 3)
         self.__across.addButton(value5, 4)
 
-        num = self.__across.checkedId()
+        self.num = self.__across.checkedId()
 
         button1 = QtWidgets.QPushButton('replace')
         button2 = QtWidgets.QPushButton('add')
@@ -41,28 +41,38 @@ class SkinValueWindow(QtWidgets.QWidget):
         widthLayout.addWidget(button3, True)
         mainLayout.addRow(widthLayout)
         
-        button1.clicked.connect(qt.Callback(rep(num)))
-        button2.clicked.connect(qt.Callback(add(num)))
-        button3.clicked.connect(qt.Callback(sub(num)))
-        
+        button1.clicked.connect(self._rep)
+        button2.clicked.connect(self._add)
+        button3.clicked.connect(self._sub)
 
+    def _rep(self):
+        self.num = self.__across.checkedId()
+        rep(self.num)
+
+    def _add(self):
+        self.num = self.__across.checkedId()
+        add(self.num)
+
+    def _sub(self):
+        self.num = self.__across.checkedId()
+        sub(self.num)
+        
 def rep(across):
-    print across
-    if across == 0:
-        value = 0
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif across == 1:
-        value = 0.001
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif across == 2:
-        value = 0.01
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif across == 3:
-        value = 0.5
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif across == 4:
-        value = 1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        if across == 0:
+            value = 0
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        elif across == 1:
+            value = 0.001
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        elif across == 2:
+            value = 0.01
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        elif across == 3:
+            value = 0.5
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        elif across == 4:
+            value = 1
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
        
 def add(across):
     getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
