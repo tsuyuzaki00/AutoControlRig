@@ -29,6 +29,8 @@ class SkinValueWindow(QtWidgets.QWidget):
         self.__across.addButton(value4, 3)
         self.__across.addButton(value5, 4)
 
+        num = self.__across.checkedId()
+
         button1 = QtWidgets.QPushButton('replace')
         button2 = QtWidgets.QPushButton('add')
         button3 = QtWidgets.QPushButton('sub')
@@ -38,8 +40,14 @@ class SkinValueWindow(QtWidgets.QWidget):
         widthLayout.addWidget(button2, True)
         widthLayout.addWidget(button3, True)
         mainLayout.addRow(widthLayout)
+        
+        button1.clicked.connect(qt.Callback(rep(num)))
+        button2.clicked.connect(qt.Callback(add(num)))
+        button3.clicked.connect(qt.Callback(sub(num)))
+        
 
 def rep(across):
+    print across
     if across == 0:
         value = 0
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
@@ -56,33 +64,33 @@ def rep(across):
         value = 1
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
        
-def add(count1,count2,count3,count4,count5):
+def add(across):
     getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
-    if count2 == True:
+    if across == 1:
         value = getValue + 0.001
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count3 == True:
+    elif across == 2:
         value = getValue + 0.01
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count4 == True:
+    elif across == 3:
         value = getValue + 0.5
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count5 == True:
+    elif across == 4:
         value = getValue + 1
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
 
-def sub(count1,count2,count3,count4,count5):
+def sub(across):
     getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
-    if count2 == True:
+    if across == 1:
         value = getValue - 0.001
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count3 == True:
+    elif across == 2:
         value = getValue - 0.01
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count4 == True:
+    elif across == 3:
         value = getValue - 0.5
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
-    elif count5 == True:
+    elif across == 4:
         value = getValue - 1
         pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
 
