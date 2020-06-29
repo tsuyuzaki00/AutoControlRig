@@ -145,6 +145,13 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
             guideGrp = pm.createNode( 'transform', n = '_'.join(['grp','gud',name]) )
             pm.parent(guideGrp, allGrp)
 
+            pm.select(all = True)
+            getimage = pm.listRelatives(type='imagePlane')
+            getTrs = pm.listRelatives(getimage, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, guideGrp)
+
             if pm.objExists( '_'.join(['gud',name,'layer']) ):
                 guideLayer = '_'.join( ['gud',name,'layer'] )
                 pm.editDisplayLayerMembers(guideLayer, guideGrp)
@@ -161,9 +168,9 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
             pm.select(all = True)
             getMesh = pm.listRelatives(type='mesh')
-            getGeo = pm.listRelatives(getMesh, p = True)
+            getTrs = pm.listRelatives(getMesh, p = True)
             pm.select(cl = True)
-            for i in getGeo:
+            for i in getTrs:
                 pm.parent(i, geoGrp)
 
             if pm.objExists( '_'.join(['geo',name,'layer']) ):
@@ -205,6 +212,13 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
             cameraGrp = pm.createNode( 'transform', n = '_'.join( ['grp','cam',name]) )
             pm.parent( cameraGrp, allGrp )
 
+            pm.select(all = True)
+            getCam = pm.listRelatives(type='camera')
+            getTrs = pm.listRelatives(getCam, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, cameraGrp)
+
             if pm.objExists( '_'.join(['cam',name,'layer']) ):
                 cameraLayer = '_'.join( ['cam',name,'layer'] )
                 pm.editDisplayLayerMembers(cameraLayer, cameraGrp)
@@ -217,6 +231,34 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
                 return
             lightGrp = pm.createNode( 'transform', n = '_'.join( ['grp','lit',name]) )
             pm.parent( lightGrp, allGrp )
+
+            pm.select(all = True)
+            getSlt = pm.listRelatives(type = 'spotLight')
+            getTrs = pm.listRelatives(getSlt, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, lightGrp)
+
+            pm.select(all = True)
+            getSlt = pm.listRelatives(type = 'ambientLight')
+            getTrs = pm.listRelatives(getSlt, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, lightGrp)
+
+            pm.select(all = True)
+            getSlt = pm.listRelatives(type = 'pointLight')
+            getTrs = pm.listRelatives(getSlt, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, lightGrp)
+
+            pm.select(all = True)
+            getSlt = pm.listRelatives(type = 'directionalLight')
+            getTrs = pm.listRelatives(getSlt, p = True)
+            pm.select(cl = True)
+            for i in getTrs:
+                pm.parent(i, lightGrp)
 
             if pm.objExists( '_'.join(['lit',name,'layer']) ):
                 lightLayer = '_'.join(['lit',name,'layer'] )
