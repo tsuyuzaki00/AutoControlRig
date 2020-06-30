@@ -51,25 +51,33 @@ class OptionWidget(QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):
         super(OptionWidget, self).__init__(*args, **kwargs)
         mainLayout = QtWidgets.QFormLayout(self)
+        self.setWindowTitle('ctrlColorChenge')
 
-        baseCenter = QtWidgets.QRadioButton('Base Yellow', self)
-        secondCenter = QtWidgets.QRadioButton('Second Green', self)
-        autoCenter = QtWidgets.QRadioButton('AutoSupport Green', self)
+        baseCenter1 = QtWidgets.QRadioButton('Base Yellow', self)
+        secondCenter1 = QtWidgets.QRadioButton('Second Pale', self)
+        autoCenter1 = QtWidgets.QRadioButton('AutoSupport Brown', self)
+        baseCenter2 = QtWidgets.QRadioButton('Base Green', self)
+        secondCenter2 = QtWidgets.QRadioButton('Second Green', self)
+        autoCenter2 = QtWidgets.QRadioButton('AutoSupport Green', self)
         baseLeft = QtWidgets.QRadioButton('Base Blue', self)
         secondLeft = QtWidgets.QRadioButton('Second Cyan', self)
         autoLeft = QtWidgets.QRadioButton('AutoSupport Purple', self)
         baseRight = QtWidgets.QRadioButton('Base Red', self)
         secondRight = QtWidgets.QRadioButton('Second Pink', self)
         autoRight = QtWidgets.QRadioButton('AutoSupport Magenta', self)
-        baseCenter.setChecked(True)
-        baseLeft.setChecked(True)
-        baseRight.setChecked(True)
+        baseCenter1.setChecked(True)
 
         acrossLayout = QtWidgets.QHBoxLayout(self)
-        acrossLayout.addWidget(baseCenter, True)
-        acrossLayout.addWidget(secondCenter, True)
-        acrossLayout.addWidget(autoCenter, True)
-        mainLayout.addRow('Center Color', acrossLayout)
+        acrossLayout.addWidget(baseCenter1, True)
+        acrossLayout.addWidget(secondCenter1, True)
+        acrossLayout.addWidget(autoCenter1, True)
+        mainLayout.addRow('Center Color1', acrossLayout)
+
+        acrossLayout = QtWidgets.QHBoxLayout(self)
+        acrossLayout.addWidget(baseCenter2, True)
+        acrossLayout.addWidget(secondCenter2, True)
+        acrossLayout.addWidget(autoCenter2, True)
+        mainLayout.addRow('Center Color2', acrossLayout)
 
         acrossLayout = QtWidgets.QHBoxLayout(self)
         acrossLayout.addWidget(baseLeft, True)
@@ -84,24 +92,63 @@ class OptionWidget(QtWidgets.QWidget):
         mainLayout.addRow('Right Color', acrossLayout)
 
         self.__across = QtWidgets.QButtonGroup(self)
-        self.__across.addButton(baseCenter, 0)
-        self.__across.addButton(secondCenter, 1)
-        self.__across.addButton(autoCenter, 2)
-        self.__across.addButton(baseLeft, 3)
-        self.__across.addButton(secondLeft, 4)
-        self.__across.addButton(autoLeft, 5)
-        self.__across.addButton(baseRight, 6)
-        self.__across.addButton(secondRight, 7)
-        self.__across.addButton(autoRight, 8)
+        self.__across.addButton(baseCenter1, 0)
+        self.__across.addButton(secondCenter1, 1)
+        self.__across.addButton(autoCenter1, 2)
+        self.__across.addButton(baseCenter2, 3)
+        self.__across.addButton(secondCenter2, 4)
+        self.__across.addButton(autoCenter2, 5)
+        self.__across.addButton(baseLeft, 6)
+        self.__across.addButton(secondLeft, 7)
+        self.__across.addButton(autoLeft, 8)
+        self.__across.addButton(baseRight, 9)
+        self.__across.addButton(secondRight, 10)
+        self.__across.addButton(autoRight, 11)
 
         self.num = self.__across.checkedId()
-'''
-        dialog = QtWidgets.QColorDialog(qt.getMayaWindow())
-        result = dialog.exec_()
-        if result:
-	        print dialog.selectedColor()
-        mainLayout.addRow(dialog)
-'''
+
+        button = QtWidgets.QPushButton('chengeColor')
+
+        widthLayout = QtWidgets.QHBoxLayout(self)
+        widthLayout.addWidget(button, True)
+        mainLayout.addRow(widthLayout)
+
+        button.clicked.connect(self.chenge)
+
+    def chenge(self):
+        self.num = self.__across.checkedId()
+        colorChange(self.num)
+
+def colorChange(radio):
+    sel = pm.selected()
+    shapes = pm.listRelatives(sel[0:], type='nurbsCurve')
+    for shape in shapes:
+        pm.setAttr(shape + '.overrideEnabled', 1)
+        if radio == 0:
+            pm.setAttr(shape + '.overrideColor', 17)
+        elif radio == 1:
+            pm.setAttr(shape + '.overrideColor', 21)
+        elif radio == 2:
+            pm.setAttr(shape + '.overrideColor', 24)
+        elif radio == 3:
+            pm.setAttr(shape + '.overrideColor', 14)
+        elif radio == 4:
+            pm.setAttr(shape + '.overrideColor', 27)
+        elif radio == 5:
+            pm.setAttr(shape + '.overrideColor', 7 )
+        elif radio == 6:
+            pm.setAttr(shape + '.overrideColor', 6 )
+        elif radio == 7:
+            pm.setAttr(shape + '.overrideColor', 18)
+        elif radio == 8:
+            pm.setAttr(shape + '.overrideColor', 30)
+        elif radio == 9:
+            pm.setAttr(shape + '.overrideColor', 13)
+        elif radio == 10:
+            pm.setAttr(shape + '.overrideColor', 20)
+        elif radio == 11:
+            pm.setAttr(shape + '.overrideColor', 31)
+
 def main():
     window = OptionWidget(qt.getMayaWindow())
     window.setWindowFlags(QtCore.Qt.Window)

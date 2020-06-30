@@ -27,7 +27,7 @@ def main():
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='ModelingEdit', to = True)
-    cmds.menuItem( label='CornerEdge', i = '//ennt/ENGI_Share/31_3DCG_Share/Maya_Scripts/tsuyuzakiScripts/icons/cornerEdge.png', c = 'from mainEdit import cornerEdgeSelect as ps; ps.main()')
+    cmds.menuItem( label='CornerEdge', i = 'cornerEdge.png', c = 'from mainEdit import cornerEdgeSelect as ps; ps.main()')
     cmds.menuItem( label='Combine', i = 'polyUnite.png', c = 'from modelEdit import combineMesh as ps; ps.main()')
     cmds.menuItem( label='Extract' , i = 'polyChipOff.png', c = 'from modelEdit import extractComponent as ps; ps.main()')
     cmds.menuItem( label='HardEdge', i = 'polyHardEdge.png', c = 'from modelEdit import hardEdge as ps; ps.main()' )
@@ -36,7 +36,7 @@ def main():
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')
     cmds.menuItem( subMenu=True, label='Skin', to = True)
-    cmds.menuItem( label='skinPaintValue', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
+    cmds.menuItem( label='skinPaintValue', i = 'paintTextureStrength.png', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='CreateCurves', to = True)
@@ -68,9 +68,11 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='SelectsEdit', to = True )
+    cmds.menuItem( label='ctrlColorChange', c = 'from mainEdit import ctrlColorChenge as ps; ps.main()')
+    cmds.menuItem( label='ctrlColorFreeChange', c = 'from mainEdit import ctrlColorFreeChenge as ps; ps.main()')
+    cmds.menuItem( divider = True, dividerLabel = '')
     cmds.menuItem( label='CurveInSelects', c = 'from mainEdit import curveInSelect as ps; ps.main()')
     cmds.menuItem( label='OffsetCtrl', c = 'from mainEdit import ctrlOneConnect as ps; ps.main()')
-    cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( divider = True, dividerLabel = 'Animator')
