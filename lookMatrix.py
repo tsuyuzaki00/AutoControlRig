@@ -9,7 +9,8 @@ def lookMatrix():
     inverseMatrix = pm.getAttr(sel + ".inverseMatrix")
     worldInverseMatrix = pm.getAttr(sel + ".worldInverseMatrix")
     parentInverseMatrix = pm.getAttr(sel + ".parentInverseMatrix")
-        
+    offsetParentMatrix = pm.getAttr(sel + ".offsetParentMatrix")
+
     with pm.window( title = 'lookMatrix' ):
         with pm.columnLayout():
             pm.text( label = "normalMatrixX : " + str(normalMatrix[0]))
@@ -54,6 +55,14 @@ def lookMatrix():
             pm.separator()
             pm.text( label = "parentInverseMatrixT : " + str(parentInverseMatrix[3]))
             pm.separator()
-            pm.button( label = 'print', c = 'lookMatrix()')
-            
-lookMatrix()
+            pm.text( label = "offsetParentMatrixX : " + str(offsetParentMatrix[0]))
+            pm.text( label = "offsetParentMatrixY : " + str(offsetParentMatrix[1]))
+            pm.text( label = "offsetParentMatrixZ : " + str(offsetParentMatrix[2]))
+            pm.separator()
+            pm.text( label = "offsetParentMatrixT : " + str(offsetParentMatrix[3]))
+            pm.separator()
+
+            pm.button( label = 'print', c = 'from mainEdit import lookMatrix as ps; ps.main()')
+
+def main():
+    lookMatrix()

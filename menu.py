@@ -84,3 +84,9 @@ def main():
     cmds.menuItem( label='GrpCtrlAllKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
     cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
+
+    cmds.menuItem( divider = True, dividerLabel = 'Check')
+    cmds.menuItem( subMenu=True, label='inquiry', to = True)
+    cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
+    cmds.setParent( '..', menu=True )
+
