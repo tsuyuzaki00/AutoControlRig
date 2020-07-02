@@ -102,7 +102,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle('layerSetting')
-        self.resize(400, 200)
+        self.resize(400, 210)
 
         toolWidget = qt.ToolWidget(self)
         self.setCentralWidget(toolWidget)
@@ -141,6 +141,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
         if guide:
             if pm.objExists( '_'.join(['grp','gud',name]) ):
+                pm.warning( "Group already exists" )
                 return
             guideGrp = pm.createNode( 'transform', n = '_'.join(['grp','gud',name]) )
             pm.parent(guideGrp, allGrp)
@@ -161,6 +162,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
         
         if geometry:
             if pm.objExists( '_'.join(['grp','geo',name]) ):
+                pm.warning( "Group already exists" )
                 return
             geoGrp = pm.createNode( 'transform', n = '_'.join(['grp','geo',name]) )
             pm.setAttr('grp_geo_' + name + '.inheritsTransform', 0)
@@ -182,6 +184,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
         if joint:
             if pm.objExists( '_'.join(['grp','jnt',name]) ):
+                pm.warning( "Group already exists" )
                 return
             jointGrp = pm.createNode( 'transform', n = '_'.join( ['grp','jnt',name]) )
             pm.parent(jointGrp, allGrp)
@@ -195,6 +198,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
         if ctrl:
             if pm.objExists( '_'.join(['grp','ctrl',name]) ):
+                pm.warning( "Group already exists" )
                 return
             ctrlGrp = pm.createNode( 'transform', n = '_'.join( ['grp','ctrl',name]) )
             pm.parent(ctrlGrp, allGrp)
@@ -208,6 +212,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
         if camera:
             if pm.objExists( '_'.join(['grp','cam',name]) ):
+                pm.warning( "Group already exists" )
                 return
             cameraGrp = pm.createNode( 'transform', n = '_'.join( ['grp','cam',name]) )
             pm.parent( cameraGrp, allGrp )
@@ -228,6 +233,7 @@ def layerSetting(guide = True, geometry = True, joint = True, ctrl = True, camer
 
         if light:
             if pm.objExists( '_'.join(['grp','lit',name]) ):
+                pm.warning( "Group already exists" )
                 return
             lightGrp = pm.createNode( 'transform', n = '_'.join( ['grp','lit',name]) )
             pm.parent( lightGrp, allGrp )

@@ -2,11 +2,11 @@ from maya import cmds
 def main():
     cmds.menu(l = 'Custom Tools', p ='MayaWindow', to = True)
 
-    cmds.menuItem( subMenu=True, label='Setting' )
+    cmds.menuItem( subMenu=True, label='Setting', to = True)
     cmds.menuItem( label='LeyerSetting', c = 'from mainEdit import layerSetting as ps; ps.main()')
     cmds.menuItem( optionBox=True, c = 'from mainEdit import layerSetting as ps; ps.option()')
     cmds.menuItem( label='autoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
-    cmds.menuItem( optionBox=True )
+    #cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Modeling')
@@ -23,7 +23,6 @@ def main():
     cmds.menuItem( label='SpotLight',  i = 'spotlight.png', c = 'from createRenames import spotLightCreateRename as ps; ps.main()' )
     cmds.menuItem( label='Locator', i = 'locator.png', c = 'from createRenames import spaceLocatorCreateRename as ps; ps.main()' )
     cmds.menuItem( label='Joint', i = 'kinJoint.png', c = 'from createRenames import jointCreateRename as ps; ps.main()' )
-    cmds.menuItem( label='ikHandle', i = 'kinHandle.png', c = 'from createRenames import ikHandleCreateRename as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='ModelingEdit', to = True)
@@ -32,6 +31,7 @@ def main():
     cmds.menuItem( label='Extract' , i = 'polyChipOff.png', c = 'from modelEdit import extractComponent as ps; ps.main()')
     cmds.menuItem( label='HardEdge', i = 'polyHardEdge.png', c = 'from modelEdit import hardEdge as ps; ps.main()' )
     cmds.menuItem( label='SoftEdge', i = 'polySoftEdge.png', c = 'from modelEdit import softEdge as ps; ps.main()' )
+    cmds.menuItem( label='camImageOffConnect', c = 'from modelEdit import camImageOffsetConnection as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')
@@ -53,6 +53,7 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='Constraint', to = True )
+    cmds.menuItem( label='ikHandle', i = 'kinHandle.png', c = 'from createRenames import ikHandleCreateRename as ps; ps.main()' )
     cmds.menuItem( label='Parent', i = 'parentConstraint.png', c = 'from constraints import parentConstraintRename as ps; ps.main()')
     cmds.menuItem( label='Point', i = 'posConstraint.png', c = 'from constraints import pointConstraintRename as ps; ps.main()')
     cmds.menuItem( label='Orient', i = 'orientConstraint.png', c = 'from constraints import orientConstraintRename as ps; ps.main()')
@@ -81,11 +82,11 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='Keyframe', to = True)
-    cmds.menuItem( label='GrpCtrlAllKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
-    cmds.menuItem( optionBox=True )
+    #cmds.menuItem( label='GrpCtrlAllKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Check')
+    #cmds.menuItem( label='modelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
     cmds.menuItem( subMenu=True, label='inquiry', to = True)
     cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
     cmds.setParent( '..', menu=True )

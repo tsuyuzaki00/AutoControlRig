@@ -22,7 +22,10 @@ def obj(sel):
 
 def node(sel):
     if sel.nodeType() == 'transform':
-        if pm.listRelatives(sel, c = True, type = 'mesh'):
+        if pm.listRelatives(sel, s = True) == []:
+            node = 'null'
+            return node
+        elif pm.listRelatives(sel, c = True, type = 'mesh'):
             node = 'geo'
             return node
         elif pm.listRelatives(sel, c = True, type = 'nurbsCurve'):
@@ -108,6 +111,18 @@ def other(sel):
     'RT'
 
     if 'geo' == node(sel):
+        other = '1'.zfill(3)
+    elif 'cam' == node(sel):
+        other = '1'.zfill(3)
+    elif 'image' == node(sel):
+        other = '1'.zfill(3)
+    elif 'stl' == node(sel):
+        other = '1'.zfill(3)
+    elif 'atl' == node(sel):
+        other = '1'.zfill(3)
+    elif 'ptl' == node(sel):
+        other = '1'.zfill(3)
+    elif 'dtl' == node(sel):
         other = '1'.zfill(3)
     return other
 
