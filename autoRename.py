@@ -60,37 +60,41 @@ def node(sel):
         'trs'
         'grp'
     elif sel.nodeType() == 'joint':
-        node = 'jnt' #joint
+        node = 'jnt'
         return node
     elif sel.nodeType() == 'parentConstraint':
-        node = 'prc' #ParentConstraint
+        node = 'prc'
         return node
     elif sel.nodeType() == 'pointConstraint':
-        node = 'ptc' #PointConstraint
+        node = 'ptc'
         return node
     elif sel.nodeType() == 'orientConstraint':
-        node = 'otc' #OrientConstraint
+        node = 'otc'
         return node
     elif sel.nodeType() == 'scaleConstraint':
-        node = 'slc' #ScaleConstraint
+        node = 'slc'
         return node
     elif sel.nodeType() == 'aimConstraint':
-        node = 'amc' #AimConstraint
+        node = 'amc'
         return node
     elif sel.nodeType() == 'poleVectorConstraint':
-        node = 'pvc' #PoleVectorConstraint
+        node = 'pvc'
         return node
     elif sel.nodeType() == 'IKhandle':
-        node = 'ikh' #IKhandle
+        node = 'ikh'
         return node
     elif sel.nodeType() == 'effector':
-        node = 'eft' #effector
+        node = 'eft'
         return node
-    #elif sel.nodeType() == 'parentConstraint':
-        node = 'mat' #material
+    elif sel.nodeType() == 'condition':
+        node = 'cnd' #condition
+        return node
+    elif sel.nodeType() == 'lambert':
+        node = 'lbt'
+        return node
+    #elif sel.nodeType() == 'file':
         node = 'color' #baseColor
         node = 'nmp' #normalMap
-        node = 'cnd' #condition
         node = 'mdp' #multiplyDivide Power
         node = 'pma' #PlusMinusAverage
         node = 'rvs' #Reverse
@@ -99,6 +103,7 @@ def node(sel):
         node = 'mmx' #multMatrix
         node = 'dmx' #decomposeMatrix
         node = 'cmx' #composeMatrix
+        node = 'dist' #distanceBetWeen
 
 def other(sel):
     other = 'C'

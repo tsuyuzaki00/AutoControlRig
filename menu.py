@@ -1,4 +1,5 @@
 from maya import cmds
+
 def main():
     cmds.menu(l = 'Custom Tools', p ='MayaWindow', to = True)
 
@@ -53,7 +54,7 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='Constraint', to = True )
-    cmds.menuItem( label='ikHandle', i = 'kinHandle.png', c = 'from createRenames import ikHandleCreateRename as ps; ps.main()' )
+    cmds.menuItem( label='IkHandle', i = 'kinHandle.png', c = 'from createRenames import ikHandleCreateRename as ps; ps.main()' )
     cmds.menuItem( label='Parent', i = 'parentConstraint.png', c = 'from constraints import parentConstraintRename as ps; ps.main()')
     cmds.menuItem( label='Point', i = 'posConstraint.png', c = 'from constraints import pointConstraintRename as ps; ps.main()')
     cmds.menuItem( label='Orient', i = 'orientConstraint.png', c = 'from constraints import orientConstraintRename as ps; ps.main()')
@@ -69,16 +70,16 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='SelectsEdit', to = True )
-    cmds.menuItem( label='ctrlColorChange', c = 'from mainEdit import ctrlColorChenge as ps; ps.main()')
-    cmds.menuItem( label='ctrlColorFreeChange', c = 'from mainEdit import ctrlColorFreeChenge as ps; ps.main()')
+    cmds.menuItem( label='CtrlColorChange', c = 'from mainEdit import ctrlColorChenge as ps; ps.main()')
+    cmds.menuItem( label='CtrlColorFreeChange', c = 'from mainEdit import ctrlColorFreeChenge as ps; ps.main()')
     cmds.menuItem( divider = True, dividerLabel = '')
     cmds.menuItem( label='CurveInSelects', c = 'from mainEdit import curveInSelect as ps; ps.main()')
-    cmds.menuItem( label='OffsetCtrl', c = 'from mainEdit import ctrlOneConnect as ps; ps.main()')
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( divider = True, dividerLabel = 'Animator')
     cmds.menuItem( subMenu=True, label='CreateCtrl', to = True )
     cmds.menuItem( label='AddNullNode', c = 'from mainEdit import addNullNode as ps; ps.main()')
+    cmds.menuItem( label='OffsetCtrl', c = 'from mainEdit import ctrlOneConnect as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( subMenu=True, label='Keyframe', to = True)
@@ -90,4 +91,3 @@ def main():
     cmds.menuItem( subMenu=True, label='inquiry', to = True)
     cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
     cmds.setParent( '..', menu=True )
-
