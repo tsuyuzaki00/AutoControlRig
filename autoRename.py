@@ -89,21 +89,39 @@ def node(sel):
     elif sel.nodeType() == 'condition':
         node = 'cnd' #condition
         return node
+    elif sel.nodeType() == 'multiplyDivide':
+        node = 'mdp'
+        return node
+    elif sel.nodeType() == 'plusMinusAverage':
+        node = 'pma'
+        return node
+    elif sel.nodeType() == 'reverse':
+        node = 'rvs'
+        return node
+    elif sel.nodeType() == 'clamp':
+        node = 'clp'
+        return node
+    elif sel.nodeType() == 'blendColors':
+        node = 'bdc'
+        return node
+    elif sel.nodeType() == 'multMatrix':
+        node = 'mmx'
+        return node
+    elif sel.nodeType() == 'decomposeMatrix':
+        node = 'dmx'
+        return node
+    elif sel.nodeType() == 'composeMatrix':
+        node = 'cmx'
+        return node
+    elif sel.nodeType() == 'distanceBetween':
+        node = 'dist'
+        return node
     elif sel.nodeType() == 'lambert':
         node = 'lbt'
         return node
     #elif sel.nodeType() == 'file':
         node = 'color' #baseColor
         node = 'nmp' #normalMap
-        node = 'mdp' #multiplyDivide Power
-        node = 'pma' #PlusMinusAverage
-        node = 'rvs' #Reverse
-        node = 'clp' #Clamp
-        node = 'bdc' #Blend Colors
-        node = 'mmx' #multMatrix
-        node = 'dmx' #decomposeMatrix
-        node = 'cmx' #composeMatrix
-        node = 'dist' #distanceBetWeen
 
 def other(sel):
     other = 'C'

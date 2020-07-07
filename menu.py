@@ -10,6 +10,12 @@ def main():
     #cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
 
+    cmds.menuItem( divider = True, dividerLabel = 'Check')
+    cmds.menuItem( label='modelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
+    cmds.menuItem( subMenu=True, label='inquiry', to = True)
+    cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
+    cmds.setParent( '..', menu=True )
+
     cmds.menuItem( divider = True, dividerLabel = 'Modeling')
     cmds.menuItem( subMenu=True, label='CreateObjects', to = True)
     cmds.menuItem( label='Cube', i = 'polyCube.png', c = 'from createRenames import polyCubeCreateRename as ps; ps.main()')
@@ -84,10 +90,4 @@ def main():
 
     cmds.menuItem( subMenu=True, label='Keyframe', to = True)
     #cmds.menuItem( label='GrpCtrlAllKey', c = 'from mainEdit import grpCtrlAllKey as ps; ps.main()')
-    cmds.setParent( '..', menu=True )
-
-    cmds.menuItem( divider = True, dividerLabel = 'Check')
-    #cmds.menuItem( label='modelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
-    cmds.menuItem( subMenu=True, label='inquiry', to = True)
-    cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
     cmds.setParent( '..', menu=True )
