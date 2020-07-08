@@ -6,14 +6,16 @@ def main():
     cmds.menuItem( subMenu=True, label='Setting', to = True)
     cmds.menuItem( label='LeyerSetting', c = 'from mainEdit import layerSetting as ps; ps.main()')
     cmds.menuItem( optionBox=True, c = 'from mainEdit import layerSetting as ps; ps.option()')
-    cmds.menuItem( label='autoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
+    cmds.menuItem( label='AutoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
     #cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Check')
-    cmds.menuItem( label='modelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
+    cmds.menuItem( label='ModelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
+    cmds.menuItem( label='ErrorCheckingTool', c = 'from githubClone.errorCheckingTool import ErrorCheckingTool as ps; ps.StartUI()')
     cmds.menuItem( subMenu=True, label='inquiry', to = True)
-    cmds.menuItem( label='lookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
+    cmds.menuItem( label='LookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
+    cmds.menuItem( label='LookNodeType', c = 'from mainEdit import lookNodeType as ps; ps.main()')
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Modeling')
@@ -43,7 +45,7 @@ def main():
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')
     cmds.menuItem( subMenu=True, label='Skin', to = True)
-    cmds.menuItem( label='skinPaintValue', i = 'paintTextureStrength.png', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
+    cmds.menuItem( label='SkinPaintValue', i = 'paintTextureStrength.png', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='CreateCurves', to = True)

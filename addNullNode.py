@@ -1,16 +1,18 @@
 import pymel.core as pm
 from mainEdit import qt
-from PySide2 import QtWidgets, QtCore, QtGui
+from PySide2.QtWidgets import *
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 
-class OptionWidget(QtWidgets.QWidget):
+class OptionWidget(QWidget):
     def __init__(self, *args, **kwargs):
         super(OptionWidget, self).__init__(*args, **kwargs)
-        mainLayout = QtWidgets.QFormLayout(self)
+        mainLayout = QFormLayout(self)
         self.setWindowTitle('addNullNode')
 
-        self.text1 = QtWidgets.QLineEdit('off', self)
-        self.text2 = QtWidgets.QLineEdit('mov', self)
-        button = QtWidgets.QPushButton('addNullNode')
+        self.text1 = QLineEdit('off', self)
+        self.text2 = QLineEdit('mov', self)
+        button = QPushButton('addNullNode')
 
         mainLayout.addRow(self.text1)
         mainLayout.addRow(self.text2)
@@ -36,5 +38,5 @@ def addNullNode(offName, movName):
 
 def main():
     window = OptionWidget(qt.getMayaWindow())
-    window.setWindowFlags(QtCore.Qt.Window)
+    window.setWindowFlags(Qt.Window)
     window.show()

@@ -31,6 +31,9 @@ def node(sel):
         elif pm.listRelatives(sel, c = True, type = 'nurbsCurve'):
             node = 'ctrl'
             return node
+        elif pm.listRelatives(sel, c = True, type = 'nurbsSurface'):
+            node = 'surf'
+            return node
         elif pm.listRelatives(sel, c = True, type = 'camera'):
             node = 'cam'
             return node
@@ -87,7 +90,7 @@ def node(sel):
         node = 'eft'
         return node
     elif sel.nodeType() == 'condition':
-        node = 'cnd' #condition
+        node = 'cnd'
         return node
     elif sel.nodeType() == 'multiplyDivide':
         node = 'mdp'
@@ -118,7 +121,11 @@ def node(sel):
         return node
     elif sel.nodeType() == 'lambert':
         node = 'lbt'
+        #test = pm.listConnections(sel + '.color', d = True)
+        #print test
+        #pm.rename(color,node + obj(sel) + scene(sel))
         return node
+
     #elif sel.nodeType() == 'file':
         node = 'color' #baseColor
         node = 'nmp' #normalMap
