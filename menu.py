@@ -40,7 +40,7 @@ def main():
     cmds.menuItem( label='Extract' , i = 'polyChipOff.png', c = 'from modelEdit import extractComponent as ps; ps.main()')
     cmds.menuItem( label='HardEdge', i = 'polyHardEdge.png', c = 'from modelEdit import hardEdge as ps; ps.main()' )
     cmds.menuItem( label='SoftEdge', i = 'polySoftEdge.png', c = 'from modelEdit import softEdge as ps; ps.main()' )
-    cmds.menuItem( label='camImageOffConnect', c = 'from modelEdit import camImageOffsetConnection as ps; ps.main()' )
+    cmds.menuItem( label='CamImageOffConnect', c = 'from modelEdit import camImageOffsetConnection as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')

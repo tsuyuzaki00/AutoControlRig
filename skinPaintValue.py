@@ -45,15 +45,15 @@ class SkinValueWindow(QtWidgets.QWidget):
         button2.clicked.connect(self._add)
         button3.clicked.connect(self._sub)
 
-    def _rep(self):
+    def _setRep(self):
         self.num = self.__across.checkedId()
         rep(self.num)
 
-    def _add(self):
+    def _setAdd(self):
         self.num = self.__across.checkedId()
         add(self.num)
 
-    def _sub(self):
+    def _setSub(self):
         self.num = self.__across.checkedId()
         sub(self.num)
         

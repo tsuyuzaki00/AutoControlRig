@@ -18,9 +18,9 @@ class OptionWidget(QWidget):
         mainLayout.addRow(self.text2)
         mainLayout.addRow(button)
 
-        button.clicked.connect(self.text)
+        button.clicked.connect(self._setText)
 
-    def text(self):
+    def _setText(self):
         addNullNode(self.text1.text(), self.text2.text())
 
 def addNullNode(offName, movName):
