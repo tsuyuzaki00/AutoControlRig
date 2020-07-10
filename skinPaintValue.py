@@ -41,9 +41,9 @@ class SkinValueWindow(QtWidgets.QWidget):
         widthLayout.addWidget(button3, True)
         mainLayout.addRow(widthLayout)
         
-        button1.clicked.connect(self._rep)
-        button2.clicked.connect(self._add)
-        button3.clicked.connect(self._sub)
+        button1.clicked.connect(self._setRep)
+        button2.clicked.connect(self._setAdd)
+        button3.clicked.connect(self._setSub)
 
     def _setRep(self):
         self.num = self.__across.checkedId()

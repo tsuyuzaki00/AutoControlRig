@@ -1,4 +1,5 @@
 import os
+from os import name
 from mainEdit import qt
 from PySide2.QtGui import *
 from PySide2.QtCore import *
@@ -13,6 +14,24 @@ class MainWindow(QMainWindow):
         self.resize(90,200)
         widget = OptionWidget()
         self.setCentralWidget(widget)
+
+class ContainerButtons():
+    def __init__(self, parent = None):
+        super(ContainerButtons, self).__init__(*args, **kwargs)
+
+        containerLayout = QHBoxLayout(self)
+
+        hideButton = QPushButton(name, self)
+        hideButton.setCheckable(True)
+        containerLayout.addWidget(hideButton, True)
+
+        checkAllButton = QPushButton('CheckAll ', self)
+        checkAllButton.setChecked(True)
+        containerLayout.addWidget(checkAllButton, True)
+        
+        unCheckAllButton = QPushButton('unCheckAll', self)
+        unCheckAllButton.setChecked(True)
+        containerLayout.addWidget(unCheckAllButton, True)
 
 class OptionWidget(QWidget):
     def __init__(self, *args, **kwargs):
@@ -30,204 +49,154 @@ class OptionWidget(QWidget):
         acrossLayout.addWidget(allRadio, True)
         mainLayout.addRow(acrossLayout)
 
+        useLayout = QHBoxLayout(self)
+        mainLayout.addRow(useLayout)
+
+        leftLayout = QVBoxLayout(self)
+
         #Object
+        hiddenObjectLayout = QHBoxLayout(self)
         objectButton = QPushButton('Object', self)
         objectButton.setCheckable(True)
-        '''objectButtonA = QPushButton('CheckAll ', self)
+        hiddenObjectLayout.addWidget(objectButton, True)
+        objectButtonA = QPushButton('CheckAll ', self)
         objectButtonA.setChecked(True)
+        hiddenObjectLayout.addWidget(objectButtonA, True)
         objectButtonU = QPushButton('unCheckAll', self)
-        objectButtonU.setChecked(True)'''
+        objectButtonU.setChecked(True)
+        hiddenObjectLayout.addWidget(objectButtonU, True)
+        mainLayout.addRow(hiddenObjectLayout)
+
+        checkBoxfrozenLayout = QHBoxLayout(self)
         frozenCheck = QCheckBox('FrozenTransform', self)
         frozenCheck.setChecked(True)
+        checkBoxfrozenLayout.addWidget(frozenCheck, True)
+        frozenRunButton = QPushButton('Run', self)
+        frozenRunButton.setChecked(True)
+        checkBoxfrozenLayout.addWidget(frozenRunButton, True)
+        mainLayout.addRow(checkBoxfrozenLayout)
+
+        checkBoxPivotsLayout = QHBoxLayout(self)
         pivotsCheck = QCheckBox('UnCenteredPivots', self)
         pivotsCheck.setChecked(True)
+        checkBoxPivotsLayout.addWidget(pivotsCheck, True)
+        pivotsRunButton = QPushButton('Run', self)
+        pivotsRunButton.setChecked(True)
+        checkBoxPivotsLayout.addWidget(pivotsRunButton, True)
+        mainLayout.addRow(checkBoxPivotsLayout)
+        
+        checkBoxHiddenLayout = QHBoxLayout(self)
         hiddenCheck = QCheckBox('HiddenObject', self)
         hiddenCheck.setChecked(True)
+        checkBoxHiddenLayout.addWidget(hiddenCheck, True)
+        hiddenRunButton = QPushButton('Run', self)
+        hiddenRunButton.setChecked(True)
+        checkBoxHiddenLayout.addWidget(hiddenRunButton, True)
+        mainLayout.addRow(checkBoxHiddenLayout)
 
         #Connect
+        hiddenConnectLayout = QHBoxLayout(self)
         connectButton = QPushButton('Connect', self)
         connectButton.setCheckable(True)
-        '''connectButtonA = QPushButton('CheckAll ', self)
+        hiddenConnectLayout.addWidget(connectButton, True)
+        connectButtonA = QPushButton('CheckAll ', self)
         connectButtonA.setChecked(True)
+        hiddenConnectLayout.addWidget(connectButtonA, True)
         connectButtonU = QPushButton('unCheckAll', self)
-        connectButtonU.setChecked(True)'''
+        connectButtonU.setChecked(True)
+        hiddenConnectLayout.addWidget(connectButtonU, True)
+        mainLayout.addRow(hiddenConnectLayout)
+
+        checkBoxHistoryLayout = QHBoxLayout(self)
         historyCheck = QCheckBox('History', self)
         historyCheck.setChecked(True)
-        layerCheck = QCheckBox('Layer', self)
-        layerCheck.setChecked(True)
-        keyCheck = QCheckBox('KeyedObject', self)
-        keyCheck.setChecked(True)
-        constraintCheck = QCheckBox('Constraint', self)
-        constraintCheck.setChecked(True)
-        expressionCheck = QCheckBox('Expression', self)
-        expressionCheck.setChecked(True)
+        checkBoxHistoryLayout.addWidget(historyCheck, True)
+        historyRunButton = QPushButton('Run', self)
+        historyRunButton.setChecked(True)
+        #historyRunButton.clicked.connect(self._setHistory)
+        checkBoxHistoryLayout.addWidget(historyRunButton, True)
+        mainLayout.addRow(checkBoxHistoryLayout)
 
-        #Hierarchy
-        hierarchyButton = QPushButton('Hierarchy', self)
-        hierarchyButton.setCheckable(True)
-        '''hierarchyButtonA = QPushButton('CheckAll ', self)
-        hierarchyButtonA.setChecked(True)
-        hierarchyButtonU = QPushButton('unCheckAll', self)
-        hierarchyButtonU.setChecked(True)'''
-        parentGeometryCheck = QCheckBox('ParentGeometry', self)
-        parentGeometryCheck.setChecked(True)
-        childNullCheck = QCheckBox('ChildNull', self)
-        childNullCheck.setChecked(True)
-
-        #Naming
-        namingButton = QPushButton('Naming', self)
-        namingButton.setCheckable(True)
-        '''namingButtonA = QPushButton('CheckAll ', self)
-        namingButtonA.setChecked(True)
-        namingButtonU = QPushButton('unCheckAll', self)
-        namingButtonU.setChecked(True)'''
-        defaultNameCheck = QCheckBox('DefaultName', self)
-        defaultNameCheck.setChecked(True)
-        sameNameCheck = QCheckBox('SameName', self)
-        sameNameCheck.setChecked(True)
-        nameSpacesCheck = QCheckBox('NameSpaces', self)
-        nameSpacesCheck.setChecked(True)
-
-        #geometry
-        geometryButton = QPushButton('Geometry', self)
-        geometryButton.setCheckable(True)
-        '''geometryButtonA = QPushButton('CheckAll ', self)
-        geometryButtonA.setChecked(True)
-        geometryButtonU = QPushButton('unCheckAll', self)
-        geometryButtonU.setChecked(True)'''
-        ngonCheck = QCheckBox('N-Gons', self)
-        ngonCheck.setChecked(True)
-        laminaCheck = QCheckBox('LaminaFace', self)
-        laminaCheck.setChecked(True)
-        concaveCheck = QCheckBox('ConcaveFaces', self)
-        concaveCheck.setChecked(True)
-        zeroEdgeCheck = QCheckBox('ZeroEdgeLength', self)
-        zeroEdgeCheck.setChecked(True)
-        LockedNormalsCheck = QCheckBox('LockedNormals', self)
-        LockedNormalsCheck.setChecked(True)
-
-        #UV
-        uvButton = QPushButton('UV', self)
-        uvButton.setCheckable(True)
-        '''uvButtonA = QPushButton('CheckAll ', self)
-        uvButtonA.setChecked(True)
-        uvButtonU = QPushButton('unCheckAll', self)
-        uvButtonU.setChecked(True)'''
-        legalUV = QCheckBox('Legal UV', self)
-        legalUV.setChecked(True)
-        noUV = QCheckBox('No UV', self)
-        noUV.setChecked(True)
-        inversUV = QCheckBox('InversUV', self)
-        inversUV.setChecked(True)
-        penetratingUV = QCheckBox('PenetratingUV', self)
-        penetratingUV.setChecked(True)
-
-        #Matrial
-        materialButton = QPushButton('Matrial', self)
-        materialButton.setCheckable(True)
-        '''materialButtonA = QPushButton('CheckAll ', self)
-        materialButtonA.setChecked(True)
-        materialButtonU = QPushButton('unCheckAll', self)
-        materialButtonU.setChecked(True)'''
-        defaultMat = QCheckBox('DefaultMatrial', self)
-        defaultMat.setChecked(True)
-
-
-
-        #leftLayoutSetting
-        leftLayout = QVBoxLayout(self)
-        leftLayout.addWidget(objectButton, True)
-        '''leftLayout.addWidget(objectButtonA, True)
-        leftLayout.addWidget(objectButtonU, True)'''
-        leftLayout.addWidget(frozenCheck, True)
-        leftLayout.addWidget(pivotsCheck, True)
-        leftLayout.addWidget(hiddenCheck, True)
-
-        leftLayout.addWidget(connectButton, True)
-        '''leftLayout.addWidget(connectButtonA, True)
-        leftLayout.addWidget(connectButtonU, True)'''
-        leftLayout.addWidget(historyCheck, True)
-        leftLayout.addWidget(layerCheck, True)
-        leftLayout.addWidget(keyCheck, True)
-        leftLayout.addWidget(constraintCheck, True)
-        leftLayout.addWidget(expressionCheck, True)
-
-        leftLayout.addWidget(namingButton, True)
-        '''leftLayout.addWidget(namingButtonA, True)
-        leftLayout.addWidget(namingButtonU, True)'''
-        leftLayout.addWidget(defaultNameCheck, True)
-        leftLayout.addWidget(sameNameCheck, True)
-        leftLayout.addWidget(nameSpacesCheck, True)
-
-        leftLayout.addWidget(hierarchyButton, True)
-        '''leftLayout.addWidget(hierarchyButtonA, True)
-        leftLayout.addWidget(hierarchyButtonU, True)'''
-        leftLayout.addWidget(parentGeometryCheck, True)
-        leftLayout.addWidget(childNullCheck, True)
-
-        leftLayout.addWidget(geometryButton, True)
-        '''leftLayout.addWidget(geometryButtonA, True)
-        leftLayout.addWidget(geometryButtonU, True)'''
-        leftLayout.addWidget(ngonCheck, True)
-        leftLayout.addWidget(laminaCheck, True)
-        leftLayout.addWidget(concaveCheck, True)
-        leftLayout.addWidget(zeroEdgeCheck, True)
-        leftLayout.addWidget(LockedNormalsCheck, True)
-
-        leftLayout.addWidget(uvButton, True)
-        '''leftLayout.addWidget(uvButtonA, True)
-        leftLayout.addWidget(uvButtonU, True)'''
-        leftLayout.addWidget(legalUV, True)
-        leftLayout.addWidget(noUV, True)
-        leftLayout.addWidget(inversUV, True)
-        leftLayout.addWidget(penetratingUV, True)
-
-        leftLayout.addWidget(materialButton, True)
-        '''leftLayout.addWidget(materialButtonA, True)
-        leftLayout.addWidget(materialButtonU, True)'''
-        leftLayout.addWidget(defaultMat, True)
-
-
-        mainLayout.addRow(leftLayout)
-        
         #rightLayoutSetting
-        rightLayout = QVBoxLayout(self)
-        rightLayout.addWidget(QLabel('OK'))
-        OKWidget = QListWidget()
-
-        OKItem = QLineEdit('OKobject')
-        OKWidget.addItem(OKItem.text())
-
-        rightLayout.addWidget(OKWidget)
+        #rightLayout = QVBoxLayout(self)
+        #useLayout.addWidget(rightLayout)
         
-        rightLayout.addWidget(QLabel('NG'))
+        #listTreeLayoutSetting
+        listTreeLayout = QVBoxLayout(self)
+
+        OKobject = 'OKobject'
+        listTreeLayout.addWidget(QLabel('OK'))
+        OKWidget = QListWidget()
+        OKItem = QLineEdit(OKobject)
+        OKWidget.addItem(OKItem.text())
+        listTreeLayout.addWidget(OKWidget)
+        
+        NGobject = ['NGobject']
+        NGlist = ['NGlist']
+        listTreeLayout.addWidget(QLabel('NG'))
         NGWidget = QTreeWidget()
-        NGItem = QTreeWidgetItem(['NGobject'])
+        NGItem = QTreeWidgetItem(NGobject)
         NGWidget.addTopLevelItem(NGItem)
-        QTreeWidgetItem(NGItem, ['list'])
+        QTreeWidgetItem(NGItem, NGlist)
         NGWidget.setSelectionMode(QAbstractItemView.ContiguousSelection)
-        rightLayout.addWidget(NGWidget)
+        listTreeLayout.addWidget(NGWidget)
 
-        mainLayout.addRow(rightLayout)
+        mainLayout.addRow(listTreeLayout)
 
-        #backLayoutSetting
-        backLayout = QHBoxLayout(self)
+        #runLayoutSetting
+        runLayout = QHBoxLayout(self)
+
         runButton = QPushButton('checkRun', self)
         runButton.setChecked(True)
-        allRunButton = QPushButton('checkAllRun', self)
+        allRunButton = QPushButton('allRun', self)
         allRunButton.setChecked(True)
-        backLayout.addWidget(runButton, True)
-        backLayout.addWidget(allRunButton, True)
-        mainLayout.addRow(backLayout)
+        runLayout.addWidget(runButton, True)
+        runLayout.addWidget(allRunButton, True)
+        mainLayout.addRow(runLayout)
 
+        def _setHistory(self):
+            print 'his'
 
+def history(self, list):
+    history = []
+    for obj in list:
+        shape = cmds.listRelatives(obj, shapes = True, fullPath = True)
+        if shape is not None:
+            if cmds.nodeType(shape[0]) == 'mesh':
+                historySize = len(cmds.listHistory(shape))
+                if historySize > 1:
+                    history.append(obj)
+    return history
 
-
-
-        
-
-
-
+def history_objects(self,*args):
+    ## find all history information
+    historyList=[]
+    shadingGroupList=[]
+    
+    totalObjects = len(self.uniqueGeometryList)
+    percentage = 100.0 / totalObjects
+    iteration = 1;
+    self.currentWorkingItem.setText('History')
+    for i in self.uniqueGeometryList:
+        history = cmds.listHistory(i)
+        shapeNode = cmds.listRelatives(i,ad=True, s=True)
+        for shape in shapeNode:
+            if not cmds.objExists(shape + '.instObjGroups[0]'):
+                continue
+            shadingGroup = cmds.listConnections(shape + '.instObjGroups[0]')
+            if not shadingGroup == None:
+                shadingGroupList.append(shadingGroup[0])
+            objGroup = cmds.listConnections(shape + '.instObjGroups[0]')
+            if not objGroup == None:
+                shadingGroupList.append(objGroup[0])
+        for j in history:
+            if not j in self.allShapes and not j in shadingGroupList:
+                if not 'groupId' in j and not 'lambert2SG' in j:
+                    if not 'initialShadingGroup' in j and not 'doneUV' in j:
+                        historyList.append(i)
+        self.CurrentTool_progressBar.setValue(percentage*iteration)
+        qApp.processEvents()
+        iteration+=1;
 
 def main():
     window = MainWindow(qt.getMayaWindow())

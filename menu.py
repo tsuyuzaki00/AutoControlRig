@@ -11,8 +11,8 @@ def main():
     cmds.setParent( '..', menu=True )
 
     cmds.menuItem( divider = True, dividerLabel = 'Check')
-    cmds.menuItem( label='ModelChecker', c = 'from githubClone.modelChecker.src import modelChecker as ps; ps.main()')
-    cmds.menuItem( label='ErrorCheckingTool', c = 'from githubClone.errorCheckingTool import ErrorCheckingTool as ps; ps.StartUI()')
+    cmds.menuItem( label='ModelChecker', c = 'from DL.modelChecker.src import modelChecker as ps; ps.main()')
+    cmds.menuItem( label='ErrorCheckingTool', c = 'from DL.errorCheckingTool import ErrorCheckingTool as ps; ps.StartUI()')
     cmds.menuItem( subMenu=True, label='inquiry', to = True)
     cmds.menuItem( label='LookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
     cmds.menuItem( label='LookNodeType', c = 'from mainEdit import lookNodeType as ps; ps.main()')
