@@ -193,17 +193,29 @@ class OptionWidget(QWidget):
         #rightLayoutSetting
         rightLayout = QVBoxLayout(self)
         rightLayout.addWidget(QLabel('OK'))
-        rightLayout.addWidget(QTreeView())
+        OKWidget = QListWidget()
+
+        OKItem = QLineEdit('OKobject')
+        OKWidget.addItem(OKItem.text())
+
+        rightLayout.addWidget(OKWidget)
+        
         rightLayout.addWidget(QLabel('NG'))
-        rightLayout.addWidget(QTreeView())
+        NGWidget = QTreeWidget()
+        NGItem = QTreeWidgetItem(['NGobject'])
+        NGWidget.addTopLevelItem(NGItem)
+        QTreeWidgetItem(NGItem, ['list'])
+        NGWidget.setSelectionMode(QAbstractItemView.ContiguousSelection)
+        rightLayout.addWidget(NGWidget)
+
         mainLayout.addRow(rightLayout)
 
         #backLayoutSetting
         backLayout = QHBoxLayout(self)
         runButton = QPushButton('checkRun', self)
-        runButton.setCheckable(True)
+        runButton.setChecked(True)
         allRunButton = QPushButton('checkAllRun', self)
-        allRunButton.setCheckable(True)
+        allRunButton.setChecked(True)
         backLayout.addWidget(runButton, True)
         backLayout.addWidget(allRunButton, True)
         mainLayout.addRow(backLayout)
