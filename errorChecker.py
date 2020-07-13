@@ -1,5 +1,4 @@
 import os
-from os import name
 from mainEdit import qt
 from PySide2.QtGui import *
 from PySide2.QtCore import *
@@ -11,117 +10,73 @@ class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
         self.setWindowTitle('errorChecker')
-        self.resize(90,200)
+        self.resize(200,400)
+
         widget = OptionWidget()
         self.setCentralWidget(widget)
 
-class ContainerButtons():
-    def __init__(self, parent = None):
-        super(ContainerButtons, self).__init__(*args, **kwargs)
+class SelectionRadio(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(SelectionRadio,self).__init__(*args, **kwargs)
+
+        self.selectRadio = QRadioButton('Select', self)
+        self.hierarchyRadio = QRadioButton('Hierarchy', self)
+        self.allRadio = QRadioButton('All', self)
+        self.selectRadio.setChecked(True)
+
+        acrossLayout = QHBoxLayout(self)
+        acrossLayout.addWidget(self.selectRadio)
+        acrossLayout.addWidget(self.hierarchyRadio)
+        acrossLayout.addWidget(self.allRadio)
+
+class Container(QWidget):
+    def __init__(self, checkName, *args, **kwargs):
+        super(Container, self).__init__(*args, **kwargs)
+        self.checkName = checkName
 
         containerLayout = QHBoxLayout(self)
 
-        hideButton = QPushButton(name, self)
+        hideButton = QPushButton(self.checkName, self)
         hideButton.setCheckable(True)
         containerLayout.addWidget(hideButton, True)
 
-        checkAllButton = QPushButton('CheckAll ', self)
+        checkAllButton = QPushButton('Check\n' + self.checkName, self)
         checkAllButton.setChecked(True)
         containerLayout.addWidget(checkAllButton, True)
         
-        unCheckAllButton = QPushButton('unCheckAll', self)
+        unCheckAllButton = QPushButton('unCheck\n' + self.checkName, self)
         unCheckAllButton.setChecked(True)
         containerLayout.addWidget(unCheckAllButton, True)
 
-class OptionWidget(QWidget):
+class CheckBox(QWidget):
+    def __init__(self, checkType, *args, **kwargs):
+        super(CheckBox, self).__init__(*args, **kwargs)
+        self.checkType = checkType
+        
+        checkBoxLayout = QHBoxLayout(self)
+
+        checkBox = QCheckBox(self.checkType, self)
+        checkBox.setChecked(True)
+        checkBoxLayout.addWidget(checkBox, True)
+        runButton = QPushButton('Run', self)
+        runButton.setChecked(True)
+        checkBoxLayout.addWidget(runButton, True)
+
+class ScrollBar(QWidget):
     def __init__(self, *args, **kwargs):
-        super(OptionWidget, self).__init__(*args, **kwargs)
-        mainLayout = QFormLayout(self)
+        super(ScrollBar, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
 
-        selectRadio = QRadioButton('Select', self)
-        hierarchyRadio = QRadioButton('Hierarchy', self)
-        allRadio = QRadioButton('All', self)
-        selectRadio.setChecked(True)
+        _container = Container('test')
+        _checkBox = CheckBox('test')
 
-        acrossLayout = QHBoxLayout(self)
-        acrossLayout.addWidget(selectRadio, True)
-        acrossLayout.addWidget(hierarchyRadio, True)
-        acrossLayout.addWidget(allRadio, True)
-        mainLayout.addRow(acrossLayout)
-
-        useLayout = QHBoxLayout(self)
-        mainLayout.addRow(useLayout)
-
-        leftLayout = QVBoxLayout(self)
-
-        #Object
-        hiddenObjectLayout = QHBoxLayout(self)
-        objectButton = QPushButton('Object', self)
-        objectButton.setCheckable(True)
-        hiddenObjectLayout.addWidget(objectButton, True)
-        objectButtonA = QPushButton('CheckAll ', self)
-        objectButtonA.setChecked(True)
-        hiddenObjectLayout.addWidget(objectButtonA, True)
-        objectButtonU = QPushButton('unCheckAll', self)
-        objectButtonU.setChecked(True)
-        hiddenObjectLayout.addWidget(objectButtonU, True)
-        mainLayout.addRow(hiddenObjectLayout)
-
-        checkBoxfrozenLayout = QHBoxLayout(self)
-        frozenCheck = QCheckBox('FrozenTransform', self)
-        frozenCheck.setChecked(True)
-        checkBoxfrozenLayout.addWidget(frozenCheck, True)
-        frozenRunButton = QPushButton('Run', self)
-        frozenRunButton.setChecked(True)
-        checkBoxfrozenLayout.addWidget(frozenRunButton, True)
-        mainLayout.addRow(checkBoxfrozenLayout)
-
-        checkBoxPivotsLayout = QHBoxLayout(self)
-        pivotsCheck = QCheckBox('UnCenteredPivots', self)
-        pivotsCheck.setChecked(True)
-        checkBoxPivotsLayout.addWidget(pivotsCheck, True)
-        pivotsRunButton = QPushButton('Run', self)
-        pivotsRunButton.setChecked(True)
-        checkBoxPivotsLayout.addWidget(pivotsRunButton, True)
-        mainLayout.addRow(checkBoxPivotsLayout)
+        scrollLayout.addWidget(_container)
+        scrollLayout.addWidget(_checkBox)
         
-        checkBoxHiddenLayout = QHBoxLayout(self)
-        hiddenCheck = QCheckBox('HiddenObject', self)
-        hiddenCheck.setChecked(True)
-        checkBoxHiddenLayout.addWidget(hiddenCheck, True)
-        hiddenRunButton = QPushButton('Run', self)
-        hiddenRunButton.setChecked(True)
-        checkBoxHiddenLayout.addWidget(hiddenRunButton, True)
-        mainLayout.addRow(checkBoxHiddenLayout)
 
-        #Connect
-        hiddenConnectLayout = QHBoxLayout(self)
-        connectButton = QPushButton('Connect', self)
-        connectButton.setCheckable(True)
-        hiddenConnectLayout.addWidget(connectButton, True)
-        connectButtonA = QPushButton('CheckAll ', self)
-        connectButtonA.setChecked(True)
-        hiddenConnectLayout.addWidget(connectButtonA, True)
-        connectButtonU = QPushButton('unCheckAll', self)
-        connectButtonU.setChecked(True)
-        hiddenConnectLayout.addWidget(connectButtonU, True)
-        mainLayout.addRow(hiddenConnectLayout)
-
-        checkBoxHistoryLayout = QHBoxLayout(self)
-        historyCheck = QCheckBox('History', self)
-        historyCheck.setChecked(True)
-        checkBoxHistoryLayout.addWidget(historyCheck, True)
-        historyRunButton = QPushButton('Run', self)
-        historyRunButton.setChecked(True)
-        #historyRunButton.clicked.connect(self._setHistory)
-        checkBoxHistoryLayout.addWidget(historyRunButton, True)
-        mainLayout.addRow(checkBoxHistoryLayout)
-
-        #rightLayoutSetting
-        #rightLayout = QVBoxLayout(self)
-        #useLayout.addWidget(rightLayout)
-        
-        #listTreeLayoutSetting
+class ListTree(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(ListTree, self).__init__(*args, **kwargs)
         listTreeLayout = QVBoxLayout(self)
 
         OKobject = 'OKobject'
@@ -141,64 +96,47 @@ class OptionWidget(QWidget):
         NGWidget.setSelectionMode(QAbstractItemView.ContiguousSelection)
         listTreeLayout.addWidget(NGWidget)
 
-        mainLayout.addRow(listTreeLayout)
+    def OKItem(self, parameter_list):
+        pass
 
-        #runLayoutSetting
+    def NGItem(self, parameter_list):
+        pass
+
+class Run(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(Run, self).__init__(*args, **kwargs)
         runLayout = QHBoxLayout(self)
 
+        checkAllButton = QPushButton('checkUnAll', self)
+        checkAllButton.setChecked(True)
+        runLayout.addWidget(checkAllButton)
+        checkUnAllButton = QPushButton('checkAll', self)
+        checkUnAllButton.setChecked(True)
+        runLayout.addWidget(checkUnAllButton)
         runButton = QPushButton('checkRun', self)
         runButton.setChecked(True)
+        runLayout.addWidget(runButton)
         allRunButton = QPushButton('allRun', self)
         allRunButton.setChecked(True)
-        runLayout.addWidget(runButton, True)
-        runLayout.addWidget(allRunButton, True)
-        mainLayout.addRow(runLayout)
+        runLayout.addWidget(allRunButton)
 
-        def _setHistory(self):
-            print 'his'
+class OptionWidget(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(OptionWidget, self).__init__(*args, **kwargs)
 
-def history(self, list):
-    history = []
-    for obj in list:
-        shape = cmds.listRelatives(obj, shapes = True, fullPath = True)
-        if shape is not None:
-            if cmds.nodeType(shape[0]) == 'mesh':
-                historySize = len(cmds.listHistory(shape))
-                if historySize > 1:
-                    history.append(obj)
-    return history
+        optionLayout = QVBoxLayout(self)
 
-def history_objects(self,*args):
-    ## find all history information
-    historyList=[]
-    shadingGroupList=[]
-    
-    totalObjects = len(self.uniqueGeometryList)
-    percentage = 100.0 / totalObjects
-    iteration = 1;
-    self.currentWorkingItem.setText('History')
-    for i in self.uniqueGeometryList:
-        history = cmds.listHistory(i)
-        shapeNode = cmds.listRelatives(i,ad=True, s=True)
-        for shape in shapeNode:
-            if not cmds.objExists(shape + '.instObjGroups[0]'):
-                continue
-            shadingGroup = cmds.listConnections(shape + '.instObjGroups[0]')
-            if not shadingGroup == None:
-                shadingGroupList.append(shadingGroup[0])
-            objGroup = cmds.listConnections(shape + '.instObjGroups[0]')
-            if not objGroup == None:
-                shadingGroupList.append(objGroup[0])
-        for j in history:
-            if not j in self.allShapes and not j in shadingGroupList:
-                if not 'groupId' in j and not 'lambert2SG' in j:
-                    if not 'initialShadingGroup' in j and not 'doneUV' in j:
-                        historyList.append(i)
-        self.CurrentTool_progressBar.setValue(percentage*iteration)
-        qApp.processEvents()
-        iteration+=1;
+        _selectionRadio = SelectionRadio()
+        _scrollBar = ScrollBar()
+        _listTree = ListTree()
+        _run = Run()
+
+        optionLayout.addWidget(_selectionRadio)
+        optionLayout.addWidget(_scrollBar)
+        optionLayout.addWidget(_listTree)
+        optionLayout.addWidget(_run)
+        
 
 def main():
     window = MainWindow(qt.getMayaWindow())
-    window.setWindowFlags(Qt.Window)
     window.show()
