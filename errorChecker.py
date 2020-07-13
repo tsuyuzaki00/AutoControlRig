@@ -73,11 +73,29 @@ class ScrollBar(QWidget):
         super(ScrollBar, self).__init__(*args, **kwargs)
         scrollLayout = QVBoxLayout(self)
 
-        _container = Container('Object')
-        _checkBox = CheckBox('FrozenTransform')
+        _object = Container('Object')
+        scrollLayout.addWidget(_object)
+        objectsLists = [
+                        'FrozenTransform',
+                        'UnCenteredPivots',
+                        'HiddenObject',
+                        ]
+        for objectsList in objectsLists:
+            _checkBox = CheckBox(objectsList)
+            scrollLayout.addWidget(_checkBox)
 
-        scrollLayout.addWidget(_container)
-        scrollLayout.addWidget(_checkBox)
+        _connect = Container('Connect')
+        scrollLayout.addWidget(_connect)
+        objectsLists = [
+                        'History',
+                        'Layer',
+                        'KeyedObject',
+                        'Constraint',
+                        'Expression',
+                        ]
+        for objectsList in objectsLists:
+            _checkBox = CheckBox(objectsList)
+            scrollLayout.addWidget(_checkBox)
 
 class ListTree(QWidget):
     def __init__(self, *args, **kwargs):
