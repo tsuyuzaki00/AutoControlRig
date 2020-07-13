@@ -19,15 +19,21 @@ class SelectionRadio(QWidget):
     def __init__(self, *args, **kwargs):
         super(SelectionRadio,self).__init__(*args, **kwargs)
 
+        selectionLayout = QHBoxLayout(self)
+
         self.selectRadio = QRadioButton('Select', self)
         self.hierarchyRadio = QRadioButton('Hierarchy', self)
         self.allRadio = QRadioButton('All', self)
         self.selectRadio.setChecked(True)
 
-        acrossLayout = QHBoxLayout(self)
-        acrossLayout.addWidget(self.selectRadio)
-        acrossLayout.addWidget(self.hierarchyRadio)
-        acrossLayout.addWidget(self.allRadio)
+        selectionLayout.addWidget(self.selectRadio, True)
+        selectionLayout.addWidget(self.hierarchyRadio, True)
+        selectionLayout.addWidget(self.allRadio, True)
+
+        self.__selectionLayout = QButtonGroup(self)
+        self.__selectionLayout.addButton(self.selectRadio, 0)
+        self.__selectionLayout.addButton(self.hierarchyRadio, 1)
+        self.__selectionLayout.addButton(self.allRadio, 2)
 
 class Container(QWidget):
     def __init__(self, checkName, *args, **kwargs):
@@ -67,12 +73,11 @@ class ScrollBar(QWidget):
         super(ScrollBar, self).__init__(*args, **kwargs)
         scrollLayout = QVBoxLayout(self)
 
-        _container = Container('test')
-        _checkBox = CheckBox('test')
+        _container = Container('Object')
+        _checkBox = CheckBox('FrozenTransform')
 
         scrollLayout.addWidget(_container)
         scrollLayout.addWidget(_checkBox)
-        
 
 class ListTree(QWidget):
     def __init__(self, *args, **kwargs):
@@ -124,18 +129,18 @@ class OptionWidget(QWidget):
     def __init__(self, *args, **kwargs):
         super(OptionWidget, self).__init__(*args, **kwargs)
 
-        optionLayout = QVBoxLayout(self)
+        optionLayout = QGridLayout(self)
 
         _selectionRadio = SelectionRadio()
         _scrollBar = ScrollBar()
         _listTree = ListTree()
         _run = Run()
 
-        optionLayout.addWidget(_selectionRadio)
-        optionLayout.addWidget(_scrollBar)
-        optionLayout.addWidget(_listTree)
-        optionLayout.addWidget(_run)
-        
+        optionLayout.addWidget(_selectionRadio,0,0,1,0)
+        optionLayout.addWidget(_scrollBar, 1, 0)
+        optionLayout.addWidget(_listTree, 1, 1)
+        optionLayout.addWidget(_run, 2, 0, 2, 2)
+
 
 def main():
     window = MainWindow(qt.getMayaWindow())
