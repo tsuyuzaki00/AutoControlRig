@@ -1,3 +1,5 @@
+from DL.modelChecker.src.modelChecker import history
+from mainEdit.lookNodeType import checkNodeType
 import os
 from mainEdit import qt
 from PySide2.QtGui import *
@@ -10,7 +12,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
         self.setWindowTitle('errorChecker')
-        self.resize(200,400)
+        self.resize(450,800)
 
         widget = OptionWidget()
         self.setCentralWidget(widget)
@@ -34,6 +36,16 @@ class SelectionRadio(QWidget):
         self.__selectionLayout.addButton(self.selectRadio, 0)
         self.__selectionLayout.addButton(self.hierarchyRadio, 1)
         self.__selectionLayout.addButton(self.allRadio, 2)
+
+        if self.sender() == self.selectRadio:
+            sels = cmds.ls(sl = True)
+            return sels
+        elif self.sender() == self.hierarchyRadio:
+            sels = cmds.ls(sl = True, dag = True, tr = True)
+            return sels
+        elif self.sender() == self.allRadio:
+            sels = cmds.ls(tr = True, v = True)
+            return sels
 
 class Container(QWidget):
     def __init__(self, checkName, *args, **kwargs):
@@ -64,6 +76,7 @@ class CheckBox(QWidget):
         checkBox = QCheckBox(self.checkType, self)
         checkBox.setChecked(True)
         checkBoxLayout.addWidget(checkBox, True)
+
         runButton = QPushButton('Run', self)
         runButton.setChecked(True)
         checkBoxLayout.addWidget(runButton, True)
@@ -71,46 +84,123 @@ class CheckBox(QWidget):
 class ScrollBar(QWidget):
     def __init__(self, *args, **kwargs):
         super(ScrollBar, self).__init__(*args, **kwargs)
+        mainLayout = QHBoxLayout(self)
+         
+        scrollArea = QScrollArea(self)
+        scrollArea.setWidgetResizable(True)
+        scrollArea.setMinimumWidth(250)
+        mainLayout.addWidget(scrollArea)
+
+        _checkGrp = CheckGrp(self)
+        scrollArea.setWidget(_checkGrp)
+
+class CheckGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(CheckGrp, self).__init__(*args, **kwargs)
         scrollLayout = QVBoxLayout(self)
 
         _object = Container('Object')
         scrollLayout.addWidget(_object)
-        objectsLists = [
-                        'FrozenTransform',
-                        'UnCenteredPivots',
-                        'HiddenObject',
-                        ]
-        for objectsList in objectsLists:
-            _checkBox = CheckBox(objectsList)
-            scrollLayout.addWidget(_checkBox)
+
+
+        _frozenBox = CheckBox('FrozenTransform')
+        scrollLayout.addWidget(_frozenBox)
+
+        _objectBox = CheckBox('UnCenteredPivots')
+        scrollLayout.addWidget(_objectBox)
+
+        _objectBox = CheckBox('HiddenObject')
+        scrollLayout.addWidget(_objectBox)
 
         _connect = Container('Connect')
         scrollLayout.addWidget(_connect)
-        objectsLists = [
+        connectLists = [
                         'History',
                         'Layer',
                         'KeyedObject',
                         'Constraint',
                         'Expression',
                         ]
-        for objectsList in objectsLists:
-            _checkBox = CheckBox(objectsList)
-            scrollLayout.addWidget(_checkBox)
+        for connectList in connectLists:
+            _connectBox = CheckBox(connectList)
+            scrollLayout.addWidget(_connectBox)
+
+        _naming = Container('Naming')
+        scrollLayout.addWidget(_naming)
+        namingLists = [
+                        'DefaultName',
+                        'SameName',
+                        'NameSpaces',
+                        ]
+        for namingList in namingLists:
+            _namingBox = CheckBox(namingList)
+            scrollLayout.addWidget(_namingBox)
+
+        _hierarchy = Container('Hierarchy')
+        scrollLayout.addWidget(_hierarchy)
+        hierarchyLists = [
+                        'ParentGeometry',
+                        'ChildNull',
+                        ]
+        for hierarchyList in hierarchyLists:
+            _hierarchyBox = CheckBox(hierarchyList)
+            scrollLayout.addWidget(_hierarchyBox)
+
+        _geometry = Container('Geometry')
+        scrollLayout.addWidget(_geometry)
+        geometryLists = [
+                        'N-Gons',
+                        'LaminaFace',
+                        'ConcaveFaces',
+                        'ZeroEdgeLength',
+                        'LockedNormals',
+                        ]
+        for geometryList in geometryLists:
+            _geometryBox = CheckBox(geometryList)
+            scrollLayout.addWidget(_geometryBox)
+
+        _uv = Container('UV')
+        scrollLayout.addWidget(_uv)
+        uvLists = [
+                        'Legal UV',
+                        'PenetratingUV',
+                        'InversUV',
+                        'No UV',
+                        ]
+        for uvList in uvLists:
+            _uvBox = CheckBox(uvList)
+            scrollLayout.addWidget(_uvBox)
+
+        _matrial = Container('Matrial')
+        scrollLayout.addWidget(_matrial)
+        matrialLists = [
+                        'DefaultMaterial',
+                        ]
+        for matrialList in matrialLists:
+            _matrialBox = CheckBox(matrialList)
+            scrollLayout.addWidget(_matrialBox)
+
+    def button(self):
+        print 'test'
 
 class ListTree(QWidget):
     def __init__(self, *args, **kwargs):
         super(ListTree, self).__init__(*args, **kwargs)
         listTreeLayout = QVBoxLayout(self)
 
-        OKobject = 'OKobject'
+        _selectRaido = SelectionRadio('obj')
+        OKobject = ['OKType']
+        OKlist = [_selectRaido]
         listTreeLayout.addWidget(QLabel('OK'))
-        OKWidget = QListWidget()
-        OKItem = QLineEdit(OKobject)
-        OKWidget.addItem(OKItem.text())
+        OKWidget = QTreeWidget()
+        OKItem = QTreeWidgetItem(OKobject)
+        OKWidget.addTopLevelItem(OKItem)
+        QTreeWidgetItem(OKItem, OKlist)
+        OKWidget.setSelectionMode(QAbstractItemView.ContiguousSelection)
         listTreeLayout.addWidget(OKWidget)
         
-        NGobject = ['NGobject']
-        NGlist = ['NGlist']
+        NGobject = ['NGtype']
+        NGlist = ['NGobject']
         listTreeLayout.addWidget(QLabel('NG'))
         NGWidget = QTreeWidget()
         NGItem = QTreeWidgetItem(NGobject)
@@ -125,15 +215,15 @@ class ListTree(QWidget):
     def NGItem(self, parameter_list):
         pass
 
-class Run(QWidget):
+class RunButton(QWidget):
     def __init__(self, *args, **kwargs):
-        super(Run, self).__init__(*args, **kwargs)
+        super(RunButton, self).__init__(*args, **kwargs)
         runLayout = QHBoxLayout(self)
 
-        checkAllButton = QPushButton('checkUnAll', self)
+        checkAllButton = QPushButton('checkAll', self)
         checkAllButton.setChecked(True)
         runLayout.addWidget(checkAllButton)
-        checkUnAllButton = QPushButton('checkAll', self)
+        checkUnAllButton = QPushButton('checkUnAll', self)
         checkUnAllButton.setChecked(True)
         runLayout.addWidget(checkUnAllButton)
         runButton = QPushButton('checkRun', self)
@@ -150,16 +240,25 @@ class OptionWidget(QWidget):
         optionLayout = QGridLayout(self)
 
         _selectionRadio = SelectionRadio()
+        print _selectionRadio
         _scrollBar = ScrollBar()
         _listTree = ListTree()
-        _run = Run()
+        _run = RunButton()
 
         optionLayout.addWidget(_selectionRadio,0,0,1,0)
         optionLayout.addWidget(_scrollBar, 1, 0)
         optionLayout.addWidget(_listTree, 1, 1)
         optionLayout.addWidget(_run, 2, 0, 2, 2)
 
+class Run():
+    def __init__(self, *args, **kwargs):
+        _runbutton = RunButton()
+
+    def history(self):
+        print 'hoge'
+
 
 def main():
+    _run = Run()
     window = MainWindow(qt.getMayaWindow())
     window.show()
