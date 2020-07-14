@@ -70,16 +70,24 @@ class CheckBox(QWidget):
     def __init__(self, checkType, *args, **kwargs):
         super(CheckBox, self).__init__(*args, **kwargs)
         self.checkType = checkType
-        
         checkBoxLayout = QHBoxLayout(self)
 
+        self.getCheckBox(checkBoxLayout)
+        self.getRunButton(checkBoxLayout)
+
+    def getCheckBox(self,checkBoxLayout):
         checkBox = QCheckBox(self.checkType, self)
         checkBox.setChecked(True)
         checkBoxLayout.addWidget(checkBox, True)
 
+    def getRunButton(self,checkBoxLayout):
         runButton = QPushButton('Run', self)
         runButton.setChecked(True)
         checkBoxLayout.addWidget(runButton, True)
+        runButton.clicked.connect(self.setRunButton)
+
+    def setRunButton(self):
+        print 'test'
 
 class ScrollBar(QWidget):
     def __init__(self, *args, **kwargs):
@@ -101,8 +109,7 @@ class CheckGrp(QWidget):
 
         _object = Container('Object')
         scrollLayout.addWidget(_object)
-
-
+        
         _frozenBox = CheckBox('FrozenTransform')
         scrollLayout.addWidget(_frozenBox)
 
@@ -111,6 +118,7 @@ class CheckGrp(QWidget):
 
         _objectBox = CheckBox('HiddenObject')
         scrollLayout.addWidget(_objectBox)
+
 
         _connect = Container('Connect')
         scrollLayout.addWidget(_connect)
@@ -188,9 +196,8 @@ class ListTree(QWidget):
         super(ListTree, self).__init__(*args, **kwargs)
         listTreeLayout = QVBoxLayout(self)
 
-        _selectRaido = SelectionRadio('obj')
         OKobject = ['OKType']
-        OKlist = [_selectRaido]
+        OKlist = ['OKobject']
         listTreeLayout.addWidget(QLabel('OK'))
         OKWidget = QTreeWidget()
         OKItem = QTreeWidgetItem(OKobject)
@@ -223,15 +230,38 @@ class RunButton(QWidget):
         checkAllButton = QPushButton('checkAll', self)
         checkAllButton.setChecked(True)
         runLayout.addWidget(checkAllButton)
+        checkAllButton.clicked.connect(self.setCheckAll)
+
         checkUnAllButton = QPushButton('checkUnAll', self)
         checkUnAllButton.setChecked(True)
         runLayout.addWidget(checkUnAllButton)
+        checkUnAllButton.clicked.connect(self.setCheckUnAll)
+
         runButton = QPushButton('checkRun', self)
         runButton.setChecked(True)
         runLayout.addWidget(runButton)
+        runButton.clicked.connect(self.setCheckRun)
+        
         allRunButton = QPushButton('allRun', self)
         allRunButton.setChecked(True)
         runLayout.addWidget(allRunButton)
+        allRunButton.clicked.connect(self.setAllRun)
+
+    def setCheckAll(self):
+        _run = Run()
+        _run.history()
+
+    def setCheckUnAll(self,runLayout):
+        _run = Run()
+        _run.history()
+
+    def setCheckRun(self,runLayout):
+        _run = Run()
+        _run.history()
+
+    def setAllRun(self,runLayout):
+        _run = Run()
+        _run.history()
 
 class OptionWidget(QWidget):
     def __init__(self, *args, **kwargs):
@@ -252,7 +282,7 @@ class OptionWidget(QWidget):
 
 class Run():
     def __init__(self, *args, **kwargs):
-        _runbutton = RunButton()
+        pass
 
     def history(self):
         print 'hoge'
