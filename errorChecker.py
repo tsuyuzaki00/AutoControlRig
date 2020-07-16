@@ -1,5 +1,3 @@
-from DL.modelChecker.src.modelChecker import history
-from mainEdit.lookNodeType import checkNodeType
 import os
 from mainEdit import qt
 from PySide2.QtGui import *
@@ -23,29 +21,19 @@ class SelectionRadio(QWidget):
 
         selectionLayout = QHBoxLayout(self)
 
-        self.selectRadio = QRadioButton('Select', self)
-        self.hierarchyRadio = QRadioButton('Hierarchy', self)
-        self.allRadio = QRadioButton('All', self)
-        self.selectRadio.setChecked(True)
+        selectRadio = QRadioButton('Select')
+        hierarchyRadio = QRadioButton('Hierarchy')
+        allRadio = QRadioButton('All')
+        selectRadio.setChecked(True)
 
-        selectionLayout.addWidget(self.selectRadio, True)
-        selectionLayout.addWidget(self.hierarchyRadio, True)
-        selectionLayout.addWidget(self.allRadio, True)
+        selectionLayout.addWidget(selectRadio, True)
+        selectionLayout.addWidget(hierarchyRadio, True)
+        selectionLayout.addWidget(allRadio, True)
 
         self.__selectionLayout = QButtonGroup(self)
-        self.__selectionLayout.addButton(self.selectRadio, 0)
-        self.__selectionLayout.addButton(self.hierarchyRadio, 1)
-        self.__selectionLayout.addButton(self.allRadio, 2)
-
-        if self.sender() == self.selectRadio:
-            sels = cmds.ls(sl = True)
-            return sels
-        elif self.sender() == self.hierarchyRadio:
-            sels = cmds.ls(sl = True, dag = True, tr = True)
-            return sels
-        elif self.sender() == self.allRadio:
-            sels = cmds.ls(tr = True, v = True)
-            return sels
+        self.__selectionLayout.addButton(selectRadio, 0)
+        self.__selectionLayout.addButton(hierarchyRadio, 1)
+        self.__selectionLayout.addButton(allRadio, 2)
 
 class Container(QWidget):
     def __init__(self, checkName, *args, **kwargs):
@@ -54,17 +42,17 @@ class Container(QWidget):
 
         containerLayout = QHBoxLayout(self)
 
-        hideButton = QPushButton(self.checkName, self)
-        hideButton.setCheckable(True)
-        containerLayout.addWidget(hideButton, True)
+        self.hideButton = QPushButton(self.checkName, self)
+        self.hideButton.setCheckable(True)
+        containerLayout.addWidget(self.hideButton, True)
 
-        checkAllButton = QPushButton('Check\n' + self.checkName, self)
-        checkAllButton.setChecked(True)
-        containerLayout.addWidget(checkAllButton, True)
+        self.checkAllButton = QPushButton('Check\n' + self.checkName, self)
+        self.checkAllButton.setChecked(True)
+        containerLayout.addWidget(self.checkAllButton, True)
         
-        unCheckAllButton = QPushButton('unCheck\n' + self.checkName, self)
-        unCheckAllButton.setChecked(True)
-        containerLayout.addWidget(unCheckAllButton, True)
+        self.unCheckAllButton = QPushButton('unCheck\n' + self.checkName, self)
+        self.unCheckAllButton.setChecked(True)
+        containerLayout.addWidget(self.unCheckAllButton, True)
 
 class CheckBox(QWidget):
     def __init__(self, checkType, *args, **kwargs):
@@ -72,22 +60,20 @@ class CheckBox(QWidget):
         self.checkType = checkType
         checkBoxLayout = QHBoxLayout(self)
 
-        self.getCheckBox(checkBoxLayout)
-        self.getRunButton(checkBoxLayout)
+        self.checkedValue = True
 
-    def getCheckBox(self,checkBoxLayout):
-        checkBox = QCheckBox(self.checkType, self)
-        checkBox.setChecked(True)
-        checkBoxLayout.addWidget(checkBox, True)
+        self.checkBox = QCheckBox(self.checkType, self)
+        self.checkBox.setChecked(True)
+        self.checkBox.clicked.connect(self.setChecked)
+        checkBoxLayout.addWidget(self.checkBox, True)
 
-    def getRunButton(self,checkBoxLayout):
-        runButton = QPushButton('Run', self)
-        runButton.setChecked(True)
-        checkBoxLayout.addWidget(runButton, True)
-        runButton.clicked.connect(self.setRunButton)
+        self.runButton = QPushButton('Run', self)
+        #self.runButton.setChecked(True)
+        checkBoxLayout.addWidget(self.runButton, True)
 
-    def setRunButton(self):
-        print 'test'
+    def setChecked(self):
+        self.checkedValue = self.checkBox.isChecked()
+        #print self.checkedValue
 
 class ScrollBar(QWidget):
     def __init__(self, *args, **kwargs):
@@ -109,87 +95,195 @@ class CheckGrp(QWidget):
 
         _object = Container('Object')
         scrollLayout.addWidget(_object)
+        #_object.hideButton.clicked.connect()
         
         _frozenBox = CheckBox('FrozenTransform')
         scrollLayout.addWidget(_frozenBox)
+        _frozenBox.runButton.clicked.connect(lambda: self.setFrozenButton(_frozenBox))
 
-        _objectBox = CheckBox('UnCenteredPivots')
-        scrollLayout.addWidget(_objectBox)
+        _unCenteredBox = CheckBox('UnCenteredPivots')
+        scrollLayout.addWidget(_unCenteredBox)
+        _unCenteredBox.runButton.clicked.connect(self.setUnCenteredButton)
 
-        _objectBox = CheckBox('HiddenObject')
-        scrollLayout.addWidget(_objectBox)
+        _hiddenBox = CheckBox('HiddenObject')
+        scrollLayout.addWidget(_hiddenBox)
+        _hiddenBox.runButton.clicked.connect(self.setHiddenButton)
 
 
         _connect = Container('Connect')
         scrollLayout.addWidget(_connect)
-        connectLists = [
-                        'History',
-                        'Layer',
-                        'KeyedObject',
-                        'Constraint',
-                        'Expression',
-                        ]
-        for connectList in connectLists:
-            _connectBox = CheckBox(connectList)
-            scrollLayout.addWidget(_connectBox)
+        #_object.hideButton.clicked.connect()
+
+        _historyBox = CheckBox('History')
+        scrollLayout.addWidget(_historyBox)
+        _historyBox.runButton.clicked.connect(self.setHistoryButton)
+
+        _layerBox = CheckBox('Layer')
+        scrollLayout.addWidget(_layerBox)
+        _layerBox.runButton.clicked.connect(self.setLayerButton)
+
+        _keyedObjectBox = CheckBox('KeyedObject')
+        scrollLayout.addWidget(_keyedObjectBox)
+        _keyedObjectBox.runButton.clicked.connect(self.setKeyedObjectButton)
+
+        _constraintBox = CheckBox('Constraint')
+        scrollLayout.addWidget(_constraintBox)
+        _constraintBox.runButton.clicked.connect(self.setConstraintButton)
+
+        _expressionBox = CheckBox('Expression')
+        scrollLayout.addWidget(_expressionBox)
+        _expressionBox.runButton.clicked.connect(self.setExpressionButton)
 
         _naming = Container('Naming')
         scrollLayout.addWidget(_naming)
-        namingLists = [
-                        'DefaultName',
-                        'SameName',
-                        'NameSpaces',
-                        ]
-        for namingList in namingLists:
-            _namingBox = CheckBox(namingList)
-            scrollLayout.addWidget(_namingBox)
+        #_object.hideButton.clicked.connect()
+
+        _defaultNameBox = CheckBox('DefaultName')
+        scrollLayout.addWidget(_defaultNameBox)
+        _defaultNameBox.runButton.clicked.connect(self.setDefaultNameButton)
+
+        _sameNameBox = CheckBox('SameName')
+        scrollLayout.addWidget(_sameNameBox)
+        _sameNameBox.runButton.clicked.connect(self.setSameNameButton)
+
+        _nameSpacesBox = CheckBox('NameSpaces')
+        scrollLayout.addWidget(_nameSpacesBox)
+        _nameSpacesBox.runButton.clicked.connect(self.setNameSpacesButton)
 
         _hierarchy = Container('Hierarchy')
         scrollLayout.addWidget(_hierarchy)
-        hierarchyLists = [
-                        'ParentGeometry',
-                        'ChildNull',
-                        ]
-        for hierarchyList in hierarchyLists:
-            _hierarchyBox = CheckBox(hierarchyList)
-            scrollLayout.addWidget(_hierarchyBox)
+        #_object.hideButton.clicked.connect()
+
+        _parentGeometryBox = CheckBox('ParentGeometry')
+        scrollLayout.addWidget(_parentGeometryBox)
+        _parentGeometryBox.runButton.clicked.connect(self.setParentGeometryButton)
+
+        _childNullBox = CheckBox('ChildNull')
+        scrollLayout.addWidget(_childNullBox)
+        _childNullBox.runButton.clicked.connect(self.setChildNullButton)
 
         _geometry = Container('Geometry')
         scrollLayout.addWidget(_geometry)
-        geometryLists = [
-                        'N-Gons',
-                        'LaminaFace',
-                        'ConcaveFaces',
-                        'ZeroEdgeLength',
-                        'LockedNormals',
-                        ]
-        for geometryList in geometryLists:
-            _geometryBox = CheckBox(geometryList)
-            scrollLayout.addWidget(_geometryBox)
+        #_object.hideButton.clicked.connect()
+
+        _NgonsBox = CheckBox('N-Gons')
+        scrollLayout.addWidget(_NgonsBox)
+        _NgonsBox.runButton.clicked.connect(self.setNgonsButton)
+
+        _laminaFaceBox = CheckBox('LaminaFace')
+        scrollLayout.addWidget(_laminaFaceBox)
+        _laminaFaceBox.runButton.clicked.connect(self.setLaminaFaceButton)
+
+        _concaveFacesBox = CheckBox('ConcaveFaces')
+        scrollLayout.addWidget(_concaveFacesBox)
+        _concaveFacesBox.runButton.clicked.connect(self.setConcaveFacesButton)
+
+        _zeroEdgeLengthBox = CheckBox('ZeroEdgeLength')
+        scrollLayout.addWidget(_zeroEdgeLengthBox)
+        _zeroEdgeLengthBox.runButton.clicked.connect(self.setZeroEdgeLengthButton)
+
+        _lockedNormalsBox = CheckBox('LockedNormals')
+        scrollLayout.addWidget(_lockedNormalsBox)
+        _lockedNormalsBox.runButton.clicked.connect(self.setLockedNormalsButton)
 
         _uv = Container('UV')
         scrollLayout.addWidget(_uv)
-        uvLists = [
-                        'Legal UV',
-                        'PenetratingUV',
-                        'InversUV',
-                        'No UV',
-                        ]
-        for uvList in uvLists:
-            _uvBox = CheckBox(uvList)
-            scrollLayout.addWidget(_uvBox)
+        #_object.hideButton.clicked.connect()
+
+        _legalBox = CheckBox('Legal UV')
+        scrollLayout.addWidget(_legalBox)
+        _legalBox.runButton.clicked.connect(self.setLegalButton)
+
+        _penetratingBox = CheckBox('PenetratingUV')
+        scrollLayout.addWidget(_penetratingBox)
+        _penetratingBox.runButton.clicked.connect(self.setPenetratingButton)
+
+        _inversBox = CheckBox('InversUV')
+        scrollLayout.addWidget(_inversBox)
+        _inversBox.runButton.clicked.connect(self.setInversButton)
+
+        _noUVBox = CheckBox('No UV')
+        scrollLayout.addWidget(_noUVBox)
+        _noUVBox.runButton.clicked.connect(self.setNoUVButton)
 
         _matrial = Container('Matrial')
         scrollLayout.addWidget(_matrial)
-        matrialLists = [
-                        'DefaultMaterial',
-                        ]
-        for matrialList in matrialLists:
-            _matrialBox = CheckBox(matrialList)
-            scrollLayout.addWidget(_matrialBox)
+        #_object.hideButton.clicked.connect()
 
-    def button(self):
-        print 'test'
+        _defaultMaterialBox = CheckBox('DefaultMaterial')
+        scrollLayout.addWidget(_defaultMaterialBox)
+        _defaultMaterialBox.runButton.clicked.connect(self.setDefaultMaterialButton)
+
+    def setFrozenButton(self, _frozenBox):
+        if _frozenBox.checkedValue == True:
+            print 'FrozenTransform'
+
+    def setUnCenteredButton(self):
+        print 'UnCenteredPivots'
+
+    def setHiddenButton(self):
+        print 'HiddenObject'
+
+    def setHistoryButton(self):
+        print 'History'
+
+    def setLayerButton(self):
+        print 'Layer'
+
+    def setKeyedObjectButton(self):
+        print 'HiddenObject'
+
+    def setConstraintButton(self):
+        print 'HiddenObject'
+
+    def setExpressionButton(self):
+        print 'HiddenObject'
+
+    def setDefaultNameButton(self):
+        print 'HiddenObject'
+
+    def setSameNameButton(self):
+        print 'HiddenObject'
+
+    def setNameSpacesButton(self):
+        print 'HiddenObject'
+
+    def setParentGeometryButton(self):
+        print 'HiddenObject'
+
+    def setChildNullButton(self):
+        print 'HiddenObject'
+
+    def setNgonsButton(self):
+        print 'HiddenObject'
+
+    def setLaminaFaceButton(self):
+        print 'HiddenObject'
+
+    def setConcaveFacesButton(self):
+        print 'HiddenObject'
+
+    def setZeroEdgeLengthButton(self):
+        print 'HiddenObject'
+
+    def setLockedNormalsButton(self):
+        print 'HiddenObject'
+
+    def setLegalButton(self):
+        print 'HiddenObject'
+
+    def setPenetratingButton(self):
+        print 'HiddenObject'
+
+    def setInversButton(self):
+        print 'HiddenObject'
+
+    def setNoUVButton(self):
+        print 'HiddenObject'
+
+    def setDefaultMaterialButton(self):
+        print 'HiddenObject'
+
 
 class ListTree(QWidget):
     def __init__(self, *args, **kwargs):
@@ -285,10 +379,9 @@ class Run():
         pass
 
     def history(self):
-        print 'hoge'
+        print 'history'
 
 
 def main():
-    _run = Run()
     window = MainWindow(qt.getMayaWindow())
     window.show()
