@@ -55,6 +55,7 @@ class Container(QWidget):
         containerLayout.addWidget(self.unCheckAllButton, True)
 
 class CheckBox(QWidget):
+    checked = Signal(bool)
     def __init__(self, checkType, *args, **kwargs):
         super(CheckBox, self).__init__(*args, **kwargs)
         self.checkType = checkType
@@ -68,7 +69,7 @@ class CheckBox(QWidget):
         checkBoxLayout.addWidget(self.checkBox, True)
 
         self.runButton = QPushButton('Run', self)
-        #self.runButton.setChecked(True)
+        self.runButton.setChecked(True)
         checkBoxLayout.addWidget(self.runButton, True)
 
     def setChecked(self):
@@ -84,7 +85,7 @@ class ScrollBar(QWidget):
         scrollArea.setWidgetResizable(True)
         scrollArea.setMinimumWidth(250)
         mainLayout.addWidget(scrollArea)
-
+        
         _checkGrp = CheckGrp(self)
         scrollArea.setWidget(_checkGrp)
 
@@ -93,22 +94,68 @@ class CheckGrp(QWidget):
         super(CheckGrp, self).__init__(*args, **kwargs)
         scrollLayout = QVBoxLayout(self)
 
+        _objectGrp = ObjectGrp()
+        scrollLayout.addWidget(_objectGrp)
+        
+        _connectGrp = ConnectGrp()
+        scrollLayout.addWidget(_connectGrp)
+        
+        '''
+        _namingGrp = NamingGrp()
+        scrollLayout.addWidget(_namingGrp)
+
+        _hierarchyGrp = HierarchyGrp()
+        scrollLayout.addWidget(_hierarchyGrp)
+
+        _geometryGrp = GeometryGrp()
+        scrollLayout.addWidget(_geometryGrp)
+
+        _uvGrp = UVGrp()
+        scrollLayout.addWidget(_uvGrp)
+
+        _matrialGrp = MatrialGrp()
+        scrollLayout.addWidget(_matrialGrp)
+        '''
+
+class ObjectGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(ObjectGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
+
         _object = Container('Object')
         scrollLayout.addWidget(_object)
-        #_object.hideButton.clicked.connect()
         
         _frozenBox = CheckBox('FrozenTransform')
-        scrollLayout.addWidget(_frozenBox)
         _frozenBox.runButton.clicked.connect(lambda: self.setFrozenButton(_frozenBox))
 
         _unCenteredBox = CheckBox('UnCenteredPivots')
-        scrollLayout.addWidget(_unCenteredBox)
         _unCenteredBox.runButton.clicked.connect(self.setUnCenteredButton)
 
         _hiddenBox = CheckBox('HiddenObject')
-        scrollLayout.addWidget(_hiddenBox)
         _hiddenBox.runButton.clicked.connect(self.setHiddenButton)
+        
+        _frozenBox.checkBox.setChecked(True)
+        _unCenteredBox.checkBox.setChecked(True)
+        _hiddenBox.checkBox.setChecked(True)
 
+        scrollLayout.addWidget(_frozenBox)
+        scrollLayout.addWidget(_unCenteredBox)
+        scrollLayout.addWidget(_hiddenBox)
+
+    def setFrozenButton(self, _frozenBox):
+        if _frozenBox.checkedValue == True:
+            print 'FrozenTransform'
+
+    def setUnCenteredButton(self):
+        print 'UnCenteredPivots'
+
+    def setHiddenButton(self):
+        print 'HiddenObject'
+
+class ConnectGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(ConnectGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
 
         _connect = Container('Connect')
         scrollLayout.addWidget(_connect)
@@ -134,6 +181,26 @@ class CheckGrp(QWidget):
         scrollLayout.addWidget(_expressionBox)
         _expressionBox.runButton.clicked.connect(self.setExpressionButton)
 
+    def setHistoryButton(self):
+        print 'History'
+
+    def setLayerButton(self):
+        print 'Layer'
+
+    def setKeyedObjectButton(self):
+        print 'HiddenObject'
+
+    def setConstraintButton(self):
+        print 'HiddenObject'
+
+    def setExpressionButton(self):
+        print 'HiddenObject'
+
+class NamingGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(NamingGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
+
         _naming = Container('Naming')
         scrollLayout.addWidget(_naming)
         #_object.hideButton.clicked.connect()
@@ -150,6 +217,20 @@ class CheckGrp(QWidget):
         scrollLayout.addWidget(_nameSpacesBox)
         _nameSpacesBox.runButton.clicked.connect(self.setNameSpacesButton)
 
+    def setDefaultNameButton(self):
+        print 'HiddenObject'
+
+    def setSameNameButton(self):
+        print 'HiddenObject'
+
+    def setNameSpacesButton(self):
+        print 'HiddenObject'
+
+class HierarchyGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(HierarchyGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
+
         _hierarchy = Container('Hierarchy')
         scrollLayout.addWidget(_hierarchy)
         #_object.hideButton.clicked.connect()
@@ -161,6 +242,17 @@ class CheckGrp(QWidget):
         _childNullBox = CheckBox('ChildNull')
         scrollLayout.addWidget(_childNullBox)
         _childNullBox.runButton.clicked.connect(self.setChildNullButton)
+
+    def setParentGeometryButton(self):
+        print 'HiddenObject'
+
+    def setChildNullButton(self):
+        print 'HiddenObject'
+
+class GeometryGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(GeometryGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
 
         _geometry = Container('Geometry')
         scrollLayout.addWidget(_geometry)
@@ -186,9 +278,29 @@ class CheckGrp(QWidget):
         scrollLayout.addWidget(_lockedNormalsBox)
         _lockedNormalsBox.runButton.clicked.connect(self.setLockedNormalsButton)
 
+    def setNgonsButton(self):
+        print 'HiddenObject'
+
+    def setLaminaFaceButton(self):
+        print 'HiddenObject'
+
+    def setConcaveFacesButton(self):
+        print 'HiddenObject'
+
+    def setZeroEdgeLengthButton(self):
+        print 'HiddenObject'
+
+    def setLockedNormalsButton(self):
+        print 'HiddenObject'
+
+class UVGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(UVGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
+
         _uv = Container('UV')
         scrollLayout.addWidget(_uv)
-        #_object.hideButton.clicked.connect()
+        #_uv.hideButton.clicked.connect()
 
         _legalBox = CheckBox('Legal UV')
         scrollLayout.addWidget(_legalBox)
@@ -206,69 +318,6 @@ class CheckGrp(QWidget):
         scrollLayout.addWidget(_noUVBox)
         _noUVBox.runButton.clicked.connect(self.setNoUVButton)
 
-        _matrial = Container('Matrial')
-        scrollLayout.addWidget(_matrial)
-        #_object.hideButton.clicked.connect()
-
-        _defaultMaterialBox = CheckBox('DefaultMaterial')
-        scrollLayout.addWidget(_defaultMaterialBox)
-        _defaultMaterialBox.runButton.clicked.connect(self.setDefaultMaterialButton)
-
-    def setFrozenButton(self, _frozenBox):
-        if _frozenBox.checkedValue == True:
-            print 'FrozenTransform'
-
-    def setUnCenteredButton(self):
-        print 'UnCenteredPivots'
-
-    def setHiddenButton(self):
-        print 'HiddenObject'
-
-    def setHistoryButton(self):
-        print 'History'
-
-    def setLayerButton(self):
-        print 'Layer'
-
-    def setKeyedObjectButton(self):
-        print 'HiddenObject'
-
-    def setConstraintButton(self):
-        print 'HiddenObject'
-
-    def setExpressionButton(self):
-        print 'HiddenObject'
-
-    def setDefaultNameButton(self):
-        print 'HiddenObject'
-
-    def setSameNameButton(self):
-        print 'HiddenObject'
-
-    def setNameSpacesButton(self):
-        print 'HiddenObject'
-
-    def setParentGeometryButton(self):
-        print 'HiddenObject'
-
-    def setChildNullButton(self):
-        print 'HiddenObject'
-
-    def setNgonsButton(self):
-        print 'HiddenObject'
-
-    def setLaminaFaceButton(self):
-        print 'HiddenObject'
-
-    def setConcaveFacesButton(self):
-        print 'HiddenObject'
-
-    def setZeroEdgeLengthButton(self):
-        print 'HiddenObject'
-
-    def setLockedNormalsButton(self):
-        print 'HiddenObject'
-
     def setLegalButton(self):
         print 'HiddenObject'
 
@@ -281,9 +330,21 @@ class CheckGrp(QWidget):
     def setNoUVButton(self):
         print 'HiddenObject'
 
+class MatrialGrp(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(MatrialGrp, self).__init__(*args, **kwargs)
+        scrollLayout = QVBoxLayout(self)
+
+        _matrial = Container('Matrial')
+        scrollLayout.addWidget(_matrial)
+        #_matrial.hideButton.clicked.connect()
+
+        _defaultMaterialBox = CheckBox('DefaultMaterial')
+        scrollLayout.addWidget(_defaultMaterialBox)
+        _defaultMaterialBox.runButton.clicked.connect(self.setDefaultMaterialButton)
+
     def setDefaultMaterialButton(self):
         print 'HiddenObject'
-
 
 class ListTree(QWidget):
     def __init__(self, *args, **kwargs):
@@ -380,7 +441,6 @@ class Run():
 
     def history(self):
         print 'history'
-
 
 def main():
     window = MainWindow(qt.getMayaWindow())
