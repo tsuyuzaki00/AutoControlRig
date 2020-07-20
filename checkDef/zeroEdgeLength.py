@@ -5,18 +5,18 @@ def OKList(sel, check):
 def NGList(sel, check):
     print 'NG' + ' : ' + check + ' : ' + sel
 
-def liminaCheck(sels):
-    check = 'LiminaFace'
+def zeroEdgeLengthCheck(sels):
+    check = 'ZeroEdgeLength'
     for sel in sels:
-        limina = cmds.polyInfo(sel, nmv = True, nme = True, nue = True, iv = True, ie = True, lf = True)
-        if limina == None:
+        test = None
+        if test == None:
             OKList(sel, check)
         else :
-            cmds.select(limina)
+            cmds.select(test)
             NGList(sel, check)
             
 def main():
     sels = cmds.ls(sl = True)
-    liminaCheck(sels)
+    zeroEdgeLengthCheck(sels)
 
 main()

@@ -5,18 +5,19 @@ def OKList(sel, check):
 def NGList(sel, check):
     print 'NG' + ' : ' + check + ' : ' + sel
 
-def liminaCheck(sels):
-    check = 'LiminaFace'
+def NoUVCheck(sels):
+    check = 'No UV'
     for sel in sels:
-        limina = cmds.polyInfo(sel, nmv = True, nme = True, nue = True, iv = True, ie = True, lf = True)
-        if limina == None:
+        cmds.polyListComponentConversion(sel, tuv = True)
+
+        try:
             OKList(sel, check)
-        else :
-            cmds.select(limina)
+        except:
+            cmds.select(sel)
             NGList(sel, check)
             
 def main():
     sels = cmds.ls(sl = True)
-    liminaCheck(sels)
+    NoUVCheck(sels)
 
 main()

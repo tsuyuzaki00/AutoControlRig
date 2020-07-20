@@ -8,18 +8,18 @@ def NGList(sel, check):
 def parentGeometryCheck(sels):
     check = 'ParentGeometry'
     for sel in sels:
+        shapeNode = False
         parents = cmds.listRelatives(sel, p = True, fullPath = True)
-        if parents == None:
-            OKList(sel, check)
-        else :
+        if parents is not None:
             for i in parents:
-                hierarchys = i.split("|")
-                for j in hierarchys:
-                    print j
-                    test = cmds.listRelatives('u'+ j, s = True)
-                    print test
-                    #if cmds.nodeType(test) == 'mesh':
-                        #NGList(sel, check)
+                parentsChildren = cmds.listRelatives(i, fullPath = True)
+                for l in parentsChildren:
+                    if cmds.nodeType(l) == 'mesh':
+                        shapeNode = True
+        if shapeNode == True:
+            NGList(sel, check)
+        else :
+            OKList(sel, check)
 
 
 def main():
