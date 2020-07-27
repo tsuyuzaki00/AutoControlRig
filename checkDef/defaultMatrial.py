@@ -9,7 +9,6 @@ def defaultMatrialCheck(sels):
     check = 'DefaultMatrial'
     for sel in sels:
         shaders = cmds.listConnections(cmds.listHistory(sel,f=1), type = 'lambert')
-        print shaders
         if shaders == None:
             cmds.error('No Matrial')
         else :

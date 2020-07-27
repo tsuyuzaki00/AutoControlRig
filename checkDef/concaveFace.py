@@ -1,4 +1,4 @@
-import maya.cmds as cmds
+from maya import cmds,mel
 
 def OKList(sel, check):
     print 'OK' + ' : ' + check + ' : ' + sel
@@ -7,13 +7,15 @@ def NGList(sel, check):
 
 def concaveCheck(sels):
     check = 'ConcaveFace'
+    concave = mel.eval('polyCleanupArgList 4 { "0","2","1","0","1","1","0","0","0","1e-05","0","1e-05","0","1e-05","0","-1","0","0" };')
     for sel in sels:
-        test = None
-        if test == None:
+        if concave == [] :
             OKList(sel, check)
         else :
-            cmds.select(test)
-            NGList(sel, check)
+            for i in concave :
+                cmds.select(concave, add = True)
+                NGList(i, check)
+                
             
 def main():
     sels = cmds.ls(sl = True)

@@ -5,18 +5,24 @@ def OKList(sel, check):
 def NGList(sel, check):
     print 'NG' + ' : ' + check + ' : ' + sel
 
-def legalUVCheck(sels):
+def NoUVCheck(sels):
     check = 'Legal UV'
+    i = 0
     for sel in sels:
-        test = None
-        if test == None:
-            OKList(sel, check)
-        else :
-            cmds.select(test)
-            NGList(sel, check)
+        objectUVs = cmds.filterExpand(cmds.polyListComponentConversion(sel, tuv=True), sm=35)
+        for j in objectUVs:
+            uvPos = cmds.polyEditUV(j, q=True, v=True, u=True)
+            for k in uvPos:
+                if float(k) < 0.0 or float(k) > 1.0:
+                    cmds.select(j, add = True)
+                    NGList(j, check)
+                else :
+                    i += 1
+                    if i == len(j):
+                        OKList(sel, check)
             
 def main():
     sels = cmds.ls(sl = True)
-    legalUVCheck(sels)
+    NoUVCheck(sels)
 
 main()

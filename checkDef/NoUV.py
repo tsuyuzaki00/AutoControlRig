@@ -8,12 +8,15 @@ def NGList(sel, check):
 def NoUVCheck(sels):
     check = 'No UV'
     for sel in sels:
-        cmds.polyListComponentConversion(sel, tuv = True)
-
         try:
-            OKList(sel, check)
+            objectUVs = cmds.filterExpand(cmds.polyListComponentConversion(sel, tuv=True), sm=35)
+            for j in objectUVs:
+                uvPos = cmds.polyEditUV(j, q=True, v=True, u=True)
+                for k in uvPos:
+                    if float(k) < 0.0 or float(k) > 0.0:
+                        OKList(sel, check)
+                        return
         except:
-            cmds.select(sel)
             NGList(sel, check)
             
 def main():

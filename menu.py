@@ -14,6 +14,7 @@ def main():
     cmds.menuItem( subMenu=True, label='ExternalScript', to = True)
     cmds.menuItem( label='ModelChecker', c = 'from externalScript.modelChecker.src import modelChecker as ps; ps.main()')
     cmds.menuItem( label='ErrorCheckingTool', c = 'from externalScript.errorCheckingTool import ErrorCheckingTool as ps; ps.StartUI()')
+    cmds.menuItem( label='SkinningTool', c = 'from externalScript.skinningTool import SkinningToolsUI as ps; ps.startUI()' )
     cmds.setParent( '..', menu=True )
     cmds.menuItem( subMenu=True, label='Inquiry', to = True)
     cmds.menuItem( label='LookMatrix', c = 'from mainEdit import lookMatrix as ps; ps.main()')
@@ -47,7 +48,7 @@ def main():
 
     cmds.menuItem( divider = True, dividerLabel = 'Rigging')
     cmds.menuItem( subMenu=True, label='Skin', to = True)
-    cmds.menuItem( label='SkinPaintValue', i = 'paintTextureStrength.png', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
+    cmds.menuItem( label='SkinPaintValue', i = 'skinPaintValue.png', c = 'from mainEdit import skinPaintValue as ps; ps.main()' )
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='CreateCurves', to = True)

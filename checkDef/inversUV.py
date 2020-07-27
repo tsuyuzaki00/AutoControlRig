@@ -1,4 +1,4 @@
-import maya.cmds as cmds
+from maya import cmds,mel
 
 def OKList(sel, check):
     print 'OK' + ' : ' + check + ' : ' + sel
@@ -8,12 +8,14 @@ def NGList(sel, check):
 def inversUVCheck(sels):
     check = 'Invers UV'
     for sel in sels:
-        test = None
-        if test == None:
+        cmds.hilite(sel)
+        invers = mel.eval('selectUVFaceOrientationComponents {} 1 2 1')
+        if invers == []:
             OKList(sel, check)
         else :
-            cmds.select(test)
-            NGList(sel, check)
+            for i in invers:
+                cmds.select(invers)
+                NGList(i, check)
             
 def main():
     sels = cmds.ls(sl = True)
