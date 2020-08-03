@@ -10,9 +10,10 @@ class SkinValueWindow(QtWidgets.QWidget):
         value1 = QtWidgets.QRadioButton('0', self)
         value2 = QtWidgets.QRadioButton('0.001', self)
         value3 = QtWidgets.QRadioButton('0.01', self)
-        value4 = QtWidgets.QRadioButton('0.5', self)
-        value5 = QtWidgets.QRadioButton('1', self)
-        value5.setChecked(True)
+        value4 = QtWidgets.QRadioButton('0.1', self)
+        value5 = QtWidgets.QRadioButton('0.5', self)
+        value6 = QtWidgets.QRadioButton('1', self)
+        value6.setChecked(True)
 
         acrossLayout = QtWidgets.QHBoxLayout(self)
         acrossLayout.addWidget(value1, True)
@@ -20,6 +21,7 @@ class SkinValueWindow(QtWidgets.QWidget):
         acrossLayout.addWidget(value3, True)
         acrossLayout.addWidget(value4, True)
         acrossLayout.addWidget(value5, True)
+        acrossLayout.addWidget(value6, True)
         mainLayout.addRow('ValueNum', acrossLayout)
 
         self.__across = QtWidgets.QButtonGroup(self)
@@ -28,22 +30,26 @@ class SkinValueWindow(QtWidgets.QWidget):
         self.__across.addButton(value3, 2)
         self.__across.addButton(value4, 3)
         self.__across.addButton(value5, 4)
+        self.__across.addButton(value6, 5)
 
         self.num = self.__across.checkedId()
 
         button1 = QtWidgets.QPushButton('replace')
         button2 = QtWidgets.QPushButton('add')
         button3 = QtWidgets.QPushButton('sub')
+        button4 = QtWidgets.QPushButton('flood')
 
         widthLayout = QtWidgets.QHBoxLayout(self)
         widthLayout.addWidget(button1, True)
         widthLayout.addWidget(button2, True)
         widthLayout.addWidget(button3, True)
+        widthLayout.addWidget(button4, True)
         mainLayout.addRow(widthLayout)
         
         button1.clicked.connect(self._setRep)
         button2.clicked.connect(self._setAdd)
         button3.clicked.connect(self._setSub)
+        button4.clicked.connect(self._setflood)
 
     def _setRep(self):
         self.num = self.__across.checkedId()
@@ -56,53 +62,70 @@ class SkinValueWindow(QtWidgets.QWidget):
     def _setSub(self):
         self.num = self.__across.checkedId()
         sub(self.num)
+
+    def _setflood(self):
+        self.flood = True
+        flood(self.flood)
         
 def rep(across):
         if across == 0:
             value = 0
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
         elif across == 1:
             value = 0.001
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
         elif across == 2:
             value = 0.01
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
         elif across == 3:
-            value = 0.5
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+            value = 0.1
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
         elif across == 4:
+            value = 0.5
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        elif across == 5:
             value = 1
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
        
 def add(across):
     getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
     if across == 1:
         value = getValue + 0.001
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 2:
         value = getValue + 0.01
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 3:
-        value = getValue + 0.5
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        value = getValue + 0.1
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 4:
+        value = getValue + 0.5
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+    elif across == 5:
         value = getValue + 1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
 
 def sub(across):
     getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
     if across == 1:
         value = getValue - 0.001
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 2:
         value = getValue - 0.01
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 3:
-        value = getValue - 0.5
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        value = getValue - 0.1
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
     elif across == 4:
+        value = getValue - 0.5
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+    elif across == 5:
         value = getValue - 1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit=True, val = value)
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+
+def flood(flood):
+    if flood == True :
+        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, clear = True)
 
 def main():
     window = SkinValueWindow(qt.getMayaWindow())
