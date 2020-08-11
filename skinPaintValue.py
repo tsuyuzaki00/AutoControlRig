@@ -37,19 +37,22 @@ class SkinValueWindow(QtWidgets.QWidget):
         button1 = QtWidgets.QPushButton('replace')
         button2 = QtWidgets.QPushButton('add')
         button3 = QtWidgets.QPushButton('sub')
-        button4 = QtWidgets.QPushButton('flood')
+        button4 = QtWidgets.QPushButton('reverse')
+        button5 = QtWidgets.QPushButton('flood')
 
         widthLayout = QtWidgets.QHBoxLayout(self)
         widthLayout.addWidget(button1, True)
         widthLayout.addWidget(button2, True)
         widthLayout.addWidget(button3, True)
         widthLayout.addWidget(button4, True)
+        widthLayout.addWidget(button5, True)
         mainLayout.addRow(widthLayout)
         
         button1.clicked.connect(self._setRep)
         button2.clicked.connect(self._setAdd)
         button3.clicked.connect(self._setSub)
-        button4.clicked.connect(self._setflood)
+        button4.clicked.connect(self._setReverse)
+        button5.clicked.connect(self._setFlood)
 
     def _setRep(self):
         self.num = self.__across.checkedId()
@@ -63,7 +66,11 @@ class SkinValueWindow(QtWidgets.QWidget):
         self.num = self.__across.checkedId()
         sub(self.num)
 
-    def _setflood(self):
+    def _setReverse(self):
+        self.reverse = True
+        reverse(self.reverse)
+
+    def _setFlood(self):
         self.flood = True
         flood(self.flood)
         
@@ -121,6 +128,12 @@ def sub(across):
         paintValues(value)
     elif across == 5:
         value = getValue - 1
+        paintValues(value)
+
+def reverse(reverse):
+    if reverse == True :
+        getValue = pm.artAttrCtx('artAttrSkinContext', query = True, val = 0)
+        value = 1 - getValue
         paintValues(value)
 
 def flood(flood):
