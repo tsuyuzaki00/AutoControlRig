@@ -70,62 +70,69 @@ class SkinValueWindow(QtWidgets.QWidget):
 def rep(across):
         if across == 0:
             value = 0
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
         elif across == 1:
             value = 0.001
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
         elif across == 2:
             value = 0.01
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
         elif across == 3:
             value = 0.1
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
         elif across == 4:
             value = 0.5
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
         elif across == 5:
             value = 1
-            pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+            paintValues(value)
        
 def add(across):
-    getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
+    getValue = pm.artAttrCtx('artAttrSkinContext', query = True, val = 0)
     if across == 1:
         value = getValue + 0.001
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 2:
         value = getValue + 0.01
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 3:
         value = getValue + 0.1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 4:
         value = getValue + 0.5
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 5:
         value = getValue + 1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
 
 def sub(across):
-    getValue = pm.artAttrSkinPaintCtx('artAttrSkinContext', query = True, val = 0)
+    getValue = pm.artAttrCtx('artAttrSkinContext', query = True, val = 0)
     if across == 1:
         value = getValue - 0.001
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 2:
         value = getValue - 0.01
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 3:
         value = getValue - 0.1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 4:
         value = getValue - 0.5
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
     elif across == 5:
         value = getValue - 1
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, val = value)
+        paintValues(value)
 
 def flood(flood):
     if flood == True :
-        pm.artAttrSkinPaintCtx('artAttrSkinContext', edit = True, clear = True)
+        pm.artAttrCtx('artAttrSkinContext', edit = True, clear = True)
+        pm.artAttrCtx('artAttrContext', edit = True, clear = True)
+        pm.artAttrCtx('artAttrBlendShapeContext', edit = True, clear = True)
+
+def paintValues(value):
+    pm.artAttrCtx('artAttrSkinContext', edit = True, val = value)
+    pm.artAttrCtx('artAttrContext', edit = True, val = value)
+    pm.artAttrCtx('artAttrBlendShapeContext', edit = True, val = value)
 
 def main():
     window = SkinValueWindow(qt.getMayaWindow())
