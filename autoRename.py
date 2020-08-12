@@ -140,26 +140,35 @@ def other(sel):
     'R'
     'RT'
 
-    if 'geo' == node(sel):
-        other = '1'.zfill(3)
-    elif 'cam' == node(sel):
-        other = '1'.zfill(3)
-    elif 'image' == node(sel):
-        other = '1'.zfill(3)
-    elif 'stl' == node(sel):
-        other = '1'.zfill(3)
-    elif 'atl' == node(sel):
-        other = '1'.zfill(3)
-    elif 'ptl' == node(sel):
-        other = '1'.zfill(3)
-    elif 'dtl' == node(sel):
-        other = '1'.zfill(3)
     return other
+
+def num(sel):
+    if 'geo' == node(sel):
+        num = '1'.zfill(3)
+    elif 'cam' == node(sel):
+        num = '1'.zfill(3)
+    elif 'image' == node(sel):
+        num = '1'.zfill(3)
+    elif 'stl' == node(sel):
+        num = '1'.zfill(3)
+    elif 'atl' == node(sel):
+        num = '1'.zfill(3)
+    elif 'ptl' == node(sel):
+        num = '1'.zfill(3)
+    elif 'dtl' == node(sel):
+        num = '1'.zfill(3)
+    elif 'jnt' == node(sel):
+        num = '1'.zfill(2)
+    elif 'ctrl' == node(sel):
+        num = '1'.zfill(2)
+    return num
 
 def main():
     sels = pm.selected()
     for sel in sels:
-        lists = [node(sel),obj(sel),scene(sel),other(sel)]
+        lists = [node(sel),obj(sel),scene(sel),other(sel),num(sel)]
         names = [l for l in lists if l != '']
         autoRename = '_'.join(names)
         pm.rename(sel, autoRename)
+
+main()

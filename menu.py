@@ -7,6 +7,7 @@ def main():
     cmds.menuItem( label='LeyerSetting', c = 'from mainEdit import layerSetting as ps; ps.main()')
     cmds.menuItem( optionBox=True, c = 'from mainEdit import layerSetting as ps; ps.option()')
     cmds.menuItem( label='AutoRename', c = 'from mainEdit import autoRename as ps; ps.main()')
+    cmds.menuItem( label='ENGIRename', c = 'from ENGI import autoRename_engi as ps; ps.main()')
     #cmds.menuItem( optionBox=True )
     cmds.setParent( '..', menu=True )
 
