@@ -37,21 +37,21 @@ class SkinValueWindow(QtWidgets.QWidget):
         button1 = QtWidgets.QPushButton('replace')
         button2 = QtWidgets.QPushButton('add')
         button3 = QtWidgets.QPushButton('sub')
-        button4 = QtWidgets.QPushButton('reverse')
+        #button4 = QtWidgets.QPushButton('reverse')
         button5 = QtWidgets.QPushButton('flood')
 
         widthLayout = QtWidgets.QHBoxLayout(self)
         widthLayout.addWidget(button1, True)
         widthLayout.addWidget(button2, True)
         widthLayout.addWidget(button3, True)
-        widthLayout.addWidget(button4, True)
+        #widthLayout.addWidget(button4, True)
         widthLayout.addWidget(button5, True)
         mainLayout.addRow(widthLayout)
         
         button1.clicked.connect(self._setRep)
         button2.clicked.connect(self._setAdd)
         button3.clicked.connect(self._setSub)
-        button4.clicked.connect(self._setReverse)
+        #button4.clicked.connect(self._setReverse)
         button5.clicked.connect(self._setFlood)
 
     def _setRep(self):
@@ -151,3 +151,4 @@ def main():
     window = SkinValueWindow(qt.getMayaWindow())
     window.setWindowFlags(QtCore.Qt.Window)
     window.show()
+

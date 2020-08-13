@@ -170,5 +170,3 @@ def main():
         names = [l for l in lists if l != '']
         autoRename = '_'.join(names)
         pm.rename(sel, autoRename)
-
-main()
