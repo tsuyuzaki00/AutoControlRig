@@ -13,7 +13,18 @@ def scene(sel):
 
 def obj(sel):
     part = sel.split("_")
-    if part[0] == node(sel):
+    
+    if part[0] == pos(sel):
+        if part[1] == scene(sel):
+            obj = part[2]
+            return obj
+        else :
+            obj = part[1]
+            return obj
+    elif part[0] == node(sel):
+        obj = part[1]
+        return obj
+    elif part[0] == scene(sel):
         obj = part[1]
         return obj
     else :
@@ -130,17 +141,26 @@ def node(sel):
         node = 'color' #baseColor
         node = 'nmp' #normalMap
 
-def other(sel):
-    other = 'C'
+def pos(sel):
+    pos = 'C'
     if 'joint' == node(sel):
         if pm.listRelatives(sel, c = True) == []:
-            other = 'CT'
-    'L'
-    'LT'
-    'R'
-    'RT'
+            pos = 'CT'
 
-    return other
+    elif sel.endswith('_C') or sel.startswith('C_'):
+        pos = 'C'
+    elif sel.endswith('_CT') or sel.startswith('CT_'):
+        pos = 'CT'
+    elif sel.endswith('_L') or sel.startswith('L_'):
+        pos = 'L'
+    elif sel.endswith('_LT') or sel.startswith('LT_'):
+        pos = 'LT'
+    elif sel.endswith('_R') or sel.startswith('R_'):
+        pos = 'R'
+    elif sel.endswith('_RT') or sel.startswith('RT_'):
+        pos = 'RT'
+
+    return pos
 
 def num(sel):
     if 'geo' == node(sel):
@@ -166,7 +186,9 @@ def num(sel):
 def main():
     sels = pm.selected()
     for sel in sels:
-        lists = [node(sel),obj(sel),scene(sel),other(sel),num(sel)]
+        lists = [pos(sel),obj(sel),node(sel),scene(sel),num(sel)]
         names = [l for l in lists if l != '']
         autoRename = '_'.join(names)
         pm.rename(sel, autoRename)
+
+main()
