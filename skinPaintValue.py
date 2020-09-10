@@ -77,23 +77,28 @@ class SkinValueWindow(QtWidgets.QWidget):
 def rep(across):
         if across == 0:
             value = 0
-            paintValues(value)
+            paintValuesScale(value)
+
         elif across == 1:
             value = 0.001
-            paintValues(value)
+            paintValuesAdditive(value)
+
         elif across == 2:
             value = 0.01
-            paintValues(value)
+            paintValuesAdditive(value)
+
         elif across == 3:
             value = 0.1
-            paintValues(value)
-        elif across == 4:
+            paintValuesAdditive(value)
+
+        elif across == 4:            
             value = 0.5
-            paintValues(value)
-        elif across == 5:
+            paintValuesAbsolute(value)
+
+        elif across == 5:            
             value = 1
-            paintValues(value)
-       
+            paintValuesAbsolute(value)
+      
 def add(across):
     getValue = pm.artAttrCtx('artAttrSkinContext', query = True, val = 0)
     if across == 1:
@@ -146,6 +151,21 @@ def paintValues(value):
     pm.artAttrCtx('artAttrSkinContext', edit = True, val = value)
     pm.artAttrCtx('artAttrContext', edit = True, val = value)
     pm.artAttrCtx('artAttrBlendShapeContext', edit = True, val = value)
+
+def paintValuesAbsolute(value):
+    pm.artAttrCtx('artAttrSkinContext', edit = True, val = value, sao = 'absolute')
+    pm.artAttrCtx('artAttrContext', edit = True, val = value, sao = 'absolute')
+    pm.artAttrCtx('artAttrBlendShapeContext', edit = True, val = value, sao = 'absolute')
+
+def paintValuesAdditive(value):
+    pm.artAttrCtx('artAttrSkinContext', edit = True, val = value, sao = 'additive')
+    pm.artAttrCtx('artAttrContext', edit = True, val = value, sao = 'additive')
+    pm.artAttrCtx('artAttrBlendShapeContext', edit = True, val = value, sao = 'additive')
+
+def paintValuesScale(value):
+    pm.artAttrCtx('artAttrSkinContext', edit = True, val = value, sao = 'scale')
+    pm.artAttrCtx('artAttrContext', edit = True, val = value, sao = 'scale')
+    pm.artAttrCtx('artAttrBlendShapeContext', edit = True, val = value, sao = 'scale')
 
 def main():
     window = SkinValueWindow(qt.getMayaWindow())
