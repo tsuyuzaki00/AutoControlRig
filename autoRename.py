@@ -13,7 +13,7 @@ def scene(sel):
 
 def obj(sel):
     part = sel.split("_")
-    
+
     if part[0] == pos(sel):
         if part[1] == scene(sel):
             obj = part[2]
@@ -26,7 +26,7 @@ def obj(sel):
         return obj
     elif part[0] == scene(sel):
         obj = part[1]
-        return obj
+        return obj     
     else :
         obj = part[0]
         return obj
@@ -94,11 +94,11 @@ def node(sel):
     elif sel.nodeType() == 'poleVectorConstraint':
         node = 'pvc'
         return node
-    elif sel.nodeType() == 'IKhandle':
-        node = 'ikh'
+    elif sel.nodeType() == 'ikHandle':
+        node = 'hdl'
         return node
-    elif sel.nodeType() == 'effector':
-        node = 'eft'
+    elif sel.nodeType() == 'ikEffector':
+        node = 'eff'
         return node
     elif sel.nodeType() == 'condition':
         node = 'cnd'
@@ -130,6 +130,9 @@ def node(sel):
     elif sel.nodeType() == 'distanceBetween':
         node = 'dist'
         return node
+    elif sel.nodeType() == 'curveInfo':
+        node = 'info'
+        return node
     elif sel.nodeType() == 'lambert':
         node = 'lbt'
         #test = pm.listConnections(sel + '.color', d = True)
@@ -159,30 +162,48 @@ def pos(sel):
         pos = 'R'
     elif sel.endswith('_RT') or sel.startswith('RT_'):
         pos = 'RT'
+    else :
+        pos = 'C'
 
     return pos
 
 def num(sel):
-    if 'geo' == node(sel):
-        num = '1'.zfill(3)
-    elif 'cam' == node(sel):
-        num = '1'.zfill(3)
-    elif 'image' == node(sel):
-        num = '1'.zfill(3)
-    elif 'stl' == node(sel):
-        num = '1'.zfill(3)
-    elif 'atl' == node(sel):
-        num = '1'.zfill(3)
-    elif 'ptl' == node(sel):
-        num = '1'.zfill(3)
-    elif 'dtl' == node(sel):
-        num = '1'.zfill(3)
-    elif 'jnt' == node(sel):
-        num = '1'.zfill(2)
-    elif 'ctrl' == node(sel):
-        num = '1'.zfill(2)
-    return num
-
+    part = sel.split("_")
+    try:
+        print part[1]
+        print part[2]
+    except IndexError:
+        num = '0'.zfill(2)
+        return num
+    else :
+        if (part[-1].startswith('0') 
+            or part[-1].startswith('1')
+            or part[-1].startswith('2')
+            or part[-1].startswith('3')
+            or part[-1].startswith('4')
+            or part[-1].startswith('5')
+            or part[-1].startswith('6')
+            or part[-1].startswith('7')
+            or part[-1].startswith('8')
+            or part[-1].startswith('9')) :
+            num = part[-1]
+            return num   
+        elif (part[-2].startswith('0') 
+            or part[-2].startswith('1')
+            or part[-2].startswith('2')
+            or part[-2].startswith('3')
+            or part[-2].startswith('4')
+            or part[-2].startswith('5')
+            or part[-2].startswith('6')
+            or part[-2].startswith('7')
+            or part[-2].startswith('8')
+            or part[-2].startswith('9')) :
+            num = part[-2]
+            return num
+        else :
+            num = '0'.zfill(2)
+            return num
+    
 def main():
     sels = pm.selected()
     for sel in sels:
@@ -190,5 +211,3 @@ def main():
         names = [l for l in lists if l != '']
         autoRename = '_'.join(names)
         pm.rename(sel, autoRename)
-
-main()
