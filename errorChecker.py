@@ -439,6 +439,12 @@ class Run():
     def __init__(self, *args, **kwargs):
         pass
 
+    def selection(self):
+        cmds.ls(sl = True)
+        cmds.ls(sl = True, dag = True, tr = True)
+        cmds.ls(tr = True, v = True)
+
+
     def history(self):
         print 'history'
 
