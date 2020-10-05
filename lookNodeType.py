@@ -1,4 +1,3 @@
-from mainEdit.autoRename import node
 from mainEdit import qt
 from PySide2 import QtWidgets, QtCore, QtGui
 import pymel.core as pm
