@@ -162,6 +162,10 @@ def pos(sel):
         pos = 'R'
     elif sel.endswith('_RT') or sel.startswith('RT_'):
         pos = 'RT'
+    elif sel.endswith('_U') or sel.startswith('U_'):
+        pos = 'U'
+    elif sel.endswith('_D') or sel.startswith('D_'):
+        pos = 'D'
     else :
         pos = 'C'
 
