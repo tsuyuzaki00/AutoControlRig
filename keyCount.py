@@ -1,22 +1,16 @@
 import pymel.core as pm
 
+def countKey(interval = 10, threeKeys = 1, sels = ''):
+    for sel in sels:
+        pm.select(sel)
+        num = 1 + 2 * threeKeys
+        nowKey = pm.currentTime( query=True )
+        for loopNum in range(num):
+            pm.currentTime( nowKey )
+            pm.setKeyframe()
+            nowKey += interval
+
 def main():
-    countKey(15,1)
+    sels = pm.selected()
+    countKey(interval = 10, threeKeys = 2, sels = sels)
 
-def countKey(interval,rotate):
-    num = 1 + 2 * rotate
-    nowKey = pm.currentTime( query=True )
-    for loopNum in range(num):
-        pm.currentTime( nowKey )
-        pm.setKeyframe()
-        nowKey += interval
-
-main()
-'''
-startKey = 0
-finalTime = 150
-while nowKey <= finalTime:
-    pm.currentTime( nowKey )
-    pm.setKeyframe()
-    nowKey += interval
-    '''
