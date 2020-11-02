@@ -40,7 +40,8 @@ def main():
     cmds.setParent( '..', menu=True )
     
     cmds.menuItem( subMenu=True, label='ModelingEdit', to = True)
-    cmds.menuItem( label='CornerEdge', i = 'cornerEdge.png', c = 'from mainEdit import cornerEdgeSelect as ps; ps.main()')
+    cmds.menuItem( label='GeometryReset', c = 'from modelEdit import freezeResetHisDel as ps; ps.main()')
+    cmds.menuItem( label='CornerEdge', i = 'cornerEdge.png', c = 'from modelEdit import cornerEdgeSelect as ps; ps.main()')
     cmds.menuItem( label='Combine', i = 'polyUnite.png', c = 'from modelEdit import combineMesh as ps; ps.main()')
     cmds.menuItem( label='Extract' , i = 'polyChipOff.png', c = 'from modelEdit import extractComponent as ps; ps.main()')
     cmds.menuItem( label='HardEdge', i = 'polyHardEdge.png', c = 'from modelEdit import hardEdge as ps; ps.main()' )
