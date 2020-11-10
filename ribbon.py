@@ -9,10 +9,10 @@ class RibbonClass:
         self.obj = 'ribbon'
         self.num = 00
 
-    def settingRibbon(self, width = 16, Ucount = 4, length = 1.5):
-        melUcount = Ucount + 1
+    def settingRibbon(self, width = 16, joint = 5, length = 1.5):
+        Ucount = joint - 1
         pm.nurbsPlane( ax = [0, 1, 0], d = 1, w = width, u = Ucount, v = 1, lr = length * 0.1, ch = False, n = '_'.join( [self.pos, self.obj, 'nurb', self.scene, '00']))
-        mel.eval('string $Ucount = "%s";' % melUcount)
+        mel.eval('string $Ucount = "%s";' % joint)
         #createHair(name Ucount,Vcount,PointPerHair,CreateRestCurves,PassiveFill,EdgeBounded,Equalize,Length,Randomization,Output,Dynamic||Static,PlaceHairsInto)
         mel.eval('createHair $Ucount 1 10 0 0 1 0 5 0 2 1 1')
         hairParents = pm.rename('hairSystem1Follicles', '_'.join( [self.pos, self.obj, 'grp', self.scene, '00']))
@@ -33,4 +33,4 @@ class RibbonClass:
             print sel[-1][-1]
 
 ribbonClass = RibbonClass()
-ribbonClass.nurbsCVSelectRibbon()
+ribbonClass.settingRibbon(joint = 10)

@@ -66,6 +66,9 @@ def node(sel):
         elif pm.listRelatives(sel, c = True, type = 'directionalLight'):
             node = 'dtl'
             return node
+        elif pm.listRelatives(sel, c = True, type = 'follicle'):
+            node = 'foll'
+            return node
         #transNode
         'null'
         'offset'
