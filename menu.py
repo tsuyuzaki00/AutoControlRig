@@ -19,6 +19,8 @@ def main():
     cmds.setParent( '..', menu=True )
     cmds.menuItem( subMenu=True, label='Inquiry', to = True)
     cmds.menuItem( label='LookNodeType', c = 'from inquiry import lookNodeType as ps; ps.main()')
+    cmds.menuItem( label='LookSelectKeyAttr', c = 'from inquiry import lookSelectKeyAttr as ps; ps.main()')
+    cmds.menuItem( label='LookBindJoints', c = 'from inquiry import lookBindJoints as ps; ps.main()')
     cmds.menuItem( label='LookShapeColor', c = 'from inquiry import lookShapeColor as ps; ps.main()')
     cmds.menuItem( label='LookMatrix', c = 'from inquiry import lookMatrix as ps; ps.main()')
     cmds.setParent( '..', menu=True )
