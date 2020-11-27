@@ -33,29 +33,15 @@ def objAttrImportXml(filePass = ''):
     tree = ET.parse(inFile) 
     root = tree.getroot()
 
-    '''
-    for node in root.iter('attribute'):
-        attrs = node.findall('node')
-        attrName = node.get('string')
-        attrValue = node.get('value')
-        print (attrs, attrName, attrValue)
-    '''
-
-    for node in root:
+    for node in root.iter('node'):
         objName = node.attrib
-        for child in root.iter('attribute'):
-            attrs = child.attrib
-            print (objName, attrs)
+        for attr in node:
+            attrs = attr.attrib
 
             pm.select(objName['name'])
             pm.setAttr(objName['name'] + '.' + attrs['string'], float(attrs['value']))
-        
 
 def main():
     filePass = 'D:/Maya/scripts/testScripts/output.xml'
     objAttrExportXml(filePass = filePass)
     objAttrImportXml(filePass = filePass)
-
-filePass = 'C:/Users/tsuyuzaki.tatsuya/Desktop/test/output.xml'
-#objAttrExportXml(filePass = filePass)
-objAttrImportXml(filePass = filePass)
