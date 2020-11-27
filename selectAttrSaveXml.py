@@ -25,7 +25,6 @@ def objAttrExportXml(filePass = ''):
             selAttr = pm.getAttr(sel + '.' + selList)
             attribute = ET.SubElement(node, 'attribute', { 'string' : str(selList), 'value' : str(round(selAttr, 3))})
     
-    ET.dump(title) 
     writeXml(title, filePass)
  
 def objAttrImportXml(filePass = ''):
