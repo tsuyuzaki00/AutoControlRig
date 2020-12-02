@@ -12,5 +12,5 @@ def countKey(interval = 10, threeKeys = 1, sels = ''):
 
 def main():
     sels = pm.selected()
-    countKey(interval = 10, threeKeys = 2, sels = sels)
+    countKey(interval = 10, threeKeys = 1, sels = sels)
 

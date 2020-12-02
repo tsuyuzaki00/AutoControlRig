@@ -67,7 +67,7 @@ def node(sel):
             node = 'dtl'
             return node
         elif pm.listRelatives(sel, c = True, type = 'follicle'):
-            node = 'foll'
+            node = 'flc'
             return node
         #transNode
         'null'
