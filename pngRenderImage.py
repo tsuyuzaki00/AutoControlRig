@@ -30,6 +30,10 @@ def shotImages(cam = '', width = 1920, height = 1080, imageFormat = 32, path = '
     cmds.colorManagementPrefs(q = True , cmEnabled = True)
     cmds.renderWindowEditor("renderView", e = True, si = True, crg = cam, wi = fullPathName)
 
+def main():
+    cam = createPhotographSet(name = cameraName, trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
+    cmds.render('shotCam_front', x = 1920, y = 1080, b = True, rep = True, nsh = True)
+
 def save():
     createPhotographSet(name = cameraName, trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
     cmds.file(save = True)
