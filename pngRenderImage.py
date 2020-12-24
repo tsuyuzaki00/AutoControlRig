@@ -14,6 +14,7 @@ def createPhotographSet(name = 'camera', trs = (0, 0, 5), rot = (0,0,0)):
 
 def shotImages(cameraShape = [], imageName = '', width = 1920, height = 1080, imageFormat = 32, isRenderer = "mayaHardware2"):
     cmds.setAttr("perspShape" + ".renderable", 0)
+    cmds.setAttr("defaultRenderGlobals.animation", 0)
     cmds.setAttr("defaultRenderGlobals.currentRenderer", isRenderer, type = "string")
     cmds.setAttr("defaultRenderGlobals.imageFilePrefix", imageName, type = "string")
     cmds.setAttr("defaultResolution.width", width)
@@ -57,9 +58,11 @@ def main():
 '''
 
 def main():
-    cam1 = createPhotographSet(trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
-    cam2 = createPhotographSet(trs = (1.674, 0.37, 10.359), rot = (-0.875, 7.299, 0.0))
-    cam3 = createPhotographSet(trs = (0.978, -6.842, 0.018), rot = (-90.581, -60.372, 180.0))
+    cam1 = createPhotographSet(name = 'front', trs = (2.883, 76.78, 335.096), rot = (0.0, 0.0, 0.0))
+    cam2 = createPhotographSet(name = 'side', trs = (342.247, 78.456, 1.291), rot = (0.0, 90.0, 0.0))
+    cam3 = createPhotographSet(name = 'persp', trs = (213.072, 216.63, 205.637,), rot = (-25.01, 44.044, -0.0))
     cams = [cam1, cam2, cam3]
     for cam in cams:
         shotImages(cameraShape = cam, imageName = cam[0])
+
+  
