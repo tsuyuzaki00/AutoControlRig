@@ -1,43 +1,65 @@
 import maya.cmds as cmds
 
-width = 1920
-height = 1080
-cameras = [["camera1", (0,0,5), (0,0,0)], ["camera2", (5,0,0), (0,90,0)]]
-fileName = "testScriptRender"
-image = "png"
-path = "D:/Maya/images/"
-using = "arnold"
-cameraName = 'front'
-
-def createPhotographSet(name = 'image_000', trs = (0, 0, 5), rot = (0,0,0)):
-    camShapes = cmds.camera()
+def createPhotographSet(name = 'camera', trs = (0, 0, 5), rot = (0,0,0)):
+    cam = cmds.camera(name = 'shotCam_' + name)
     litShape = cmds.spotLight()
     litParent = cmds.listRelatives(litShape, p = True)
-    cam = cmds.rename(camShapes[0], "shotCam_" + name)
     lit = cmds.rename(litParent, "shotLit_" + name)
-    cmds.setAttr(cam + ".translate", trs[0], trs[1], trs[2], type = "double3")
-    cmds.setAttr(cam + ".rotate", rot[0], rot[1], rot[2], type = "double3")
+    cmds.setAttr(cam[0] + ".translate", trs[0], trs[1], trs[2], type = "double3")
+    cmds.setAttr(cam[0] + ".rotate", rot[0], rot[1], rot[2], type = "double3")
     cmds.setAttr(lit + ".translate", trs[0], trs[1], trs[2], type = "double3")
     cmds.setAttr(lit + ".rotate", rot[0], rot[1], rot[2], type = "double3")
-    cmds.parent(lit, cam)
+    cmds.parent(lit, cam[0])
     return cam
 
-def shotImages(cam = '', width = 1920, height = 1080, imageFormat = 32, path = '', fileName = ''):
+def shotImages(cameraShape = [], imageName = '', width = 1920, height = 1080, imageFormat = 32, isRenderer = "mayaHardware2"):
+    cmds.setAttr("perspShape" + ".renderable", 0)
+    cmds.setAttr("defaultRenderGlobals.currentRenderer", isRenderer, type = "string")
+    cmds.setAttr("defaultRenderGlobals.imageFilePrefix", imageName, type = "string")
     cmds.setAttr("defaultResolution.width", width)
     cmds.setAttr("defaultResolution.height", height)
     cmds.setAttr("defaultRenderGlobals.imageFormat", imageFormat)
-    fullPathName = path + fileName
-    cmds.colorManagementPrefs(q = True , cmEnabled = True)
-    cmds.renderWindowEditor("renderView", e = True, si = True, crg = cam, wi = fullPathName)
+    cmds.setAttr(cameraShape[1] + ".renderable", 1)
+    cmds.render(b = True, rep = True)
+    cmds.delete(cameraShape[0])
+
+def secenece(cameraShape = [], imageName = '', width = 1920, height = 1080, imageFormat = 32, isRenderer = "mayaHardware2", startFrame = 0, endFrame = 1):
+    cmds.setAttr("perspShape" + ".renderable", 0)
+    cmds.setAttr("defaultRenderGlobals.currentRenderer", isRenderer, type = "string")
+    cmds.setAttr("defaultRenderGlobals.imageFilePrefix", imageName, type = "string")
+    cmds.setAttr("defaultResolution.width", width)
+    cmds.setAttr("defaultResolution.height", height)
+    cmds.setAttr("defaultRenderGlobals.imageFormat", imageFormat)
+    cmds.setAttr(cameraShape[1] + ".renderable", 1)
+    cmds.setAttr("defaultRenderGlobals.outFormatControl", 0)
+    cmds.setAttr("defaultRenderGlobals.animation", 1)
+    cmds.setAttr("defaultRenderGlobals.animationRange", 0)
+    cmds.setAttr("defaultRenderGlobals.extensionPadding", 3)
+    cmds.setAttr("defaultRenderGlobals.startFrame", startFrame)
+    cmds.setAttr("defaultRenderGlobals.endFrame", endFrame)
+    cmds.setAttr("defaultRenderGlobals.putFrameBeforeExt", 1)
+    cmds.setAttr("defaultRenderGlobals.periodInExt", 2)
+    cmds.render(b = True, rep = True)
+
+def playblast():
+    pass
+
+def wireFrameImage():
+    pass
+
+'''
+def main():
+    cam = createPhotographSet(trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
+    start = cmds.getAttr("defaultRenderGlobals.startFrame")
+    end = cmds.getAttr("defaultRenderGlobals.endFrame")
+    secenece(cameraShape = cam, imageName = cam[0], startFrame = start, endFrame = end)
+
+'''
 
 def main():
-    cam = createPhotographSet(name = cameraName, trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
-    cmds.render('shotCam_front', x = 1920, y = 1080, b = True, rep = True, nsh = True)
-
-def save():
-    createPhotographSet(name = cameraName, trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
-    cmds.file(save = True)
-
-def delete():
-    cmds.delete('shotCam_' + 'front')
-    cmds.file(save = True)
+    cam1 = createPhotographSet(trs = (5.987, 3.484, 6.591), rot = (-16.311, 43.027, 0.0))
+    cam2 = createPhotographSet(trs = (1.674, 0.37, 10.359), rot = (-0.875, 7.299, 0.0))
+    cam3 = createPhotographSet(trs = (0.978, -6.842, 0.018), rot = (-90.581, -60.372, 180.0))
+    cams = [cam1, cam2, cam3]
+    for cam in cams:
+        shotImages(cameraShape = cam, imageName = cam[0])
